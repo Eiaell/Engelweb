@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(echo $PATH)",
+      "Bash(claude --version)",
+      "Bash(claude /help)",
+      "Bash(claude /agents)",
+      "Bash(find:*)",
+      "Bash(git init:*)",
+      "Bash(git remote add:*)",
+      "Bash(git add:*)",
+      "Bash(rm:*)"
+    ],
+    "deny": []
+  }
+}
