@@ -2,25 +2,8 @@
   "version": 2,
   "name": "engelweb",
   "alias": ["engelweb"],
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/next"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
-    }
-  ],
   "env": {
     "NODE_ENV": "production"
-  },
-  "functions": {
-    "src/app/**": {
-      "maxDuration": 30
-    }
   },
   "headers": [
     {
