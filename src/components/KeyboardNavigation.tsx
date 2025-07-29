@@ -19,7 +19,7 @@ export const KeyboardNavigation: React.FC<KeyboardNavigationProps> = ({
 }) => {
   const { state, announceToScreenReader } = useAccessibility();
   const { announceSection } = useSectionAnnouncements();
-  const focusTimeoutRef = useRef<NodeJS.Timeout>();
+  const focusTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const lastNavigationRef = useRef<number>(0);
   
   // Navigation throttling to prevent rapid section changes

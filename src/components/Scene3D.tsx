@@ -89,14 +89,18 @@ export const Scene3D: React.FC<Scene3DProps> = ({
       debounce: isMobile ? 300 : 200
     };
 
+    const cameraPosition: [number, number, number] = [0, 0, cameraDistance];
+    
+    const dpr: [number, number] = [1, Math.min(pixelRatio, 2)];
+    
     return {
-      dpr: [1, Math.min(pixelRatio, 2)],
+      dpr,
       camera: { 
-        position: [0, 0, cameraDistance], 
+        position: cameraPosition, 
         fov, 
         near: 0.1, 
         far: isMobile ? 500 : 1000 // Shorter far plane for mobile
-      },
+      } as any,
       performance: performanceSettings
     };
   }, [mobileProfile, mobileOptimizations]);

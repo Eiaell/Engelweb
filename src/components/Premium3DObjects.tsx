@@ -256,12 +256,14 @@ export const PresentScene = ({ isActive, progress }: { isActive: boolean; progre
         <bufferGeometry>
           <bufferAttribute
             attach="attributes-position"
+            args={[particles.positions, 3]}
             count={200}
             array={particles.positions}
             itemSize={3}
           />
           <bufferAttribute
             attach="attributes-color"
+            args={[particles.colors, 3]}
             count={200}
             array={particles.colors}
             itemSize={3}
