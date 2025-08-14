@@ -15,40 +15,41 @@ import { TextReveal } from '@/components/TextReveal';
 
 // Award-winning professional content with cinematic sophistication
 const sectionContent = {
-  vision: {
-    title: "De la moda a la misión",
-    subtitle: "IA anclada en conocimiento estructurado",
-    description: "No conecto modelos, construyo cimientos para que la IA sobreviva a la tendencia."
-  },
   foundation: {
-    title: "La IA no empieza con código",
-    subtitle: "Empieza con un problema que importa",
-    description: "Donde otros ven datos, yo diseño memoria corporativa viva."
+    title: "Ingesta de datos",
+    subtitle: "Transformación inteligente de información",
+    description: "Procesamos PDF, Word y Excel para crear memoria organizacional estructurada."
   },
+  
   human: {
     title: "Enfoque humano y organizacional",
-    subtitle: "Ecosistemas invisibles que preservan lo único",
-    description: "La IA más poderosa no reemplaza personas, amplifica su sabiduría."
+    subtitle: "Sistemas que potencian el talento humano",
+    description: "La IA amplifica la experiencia y conocimiento de tu equipo."
   },
   strategy: {
-    title: "La tecnología importa",
-    subtitle: "Pero la diplomacia corporativa decide quién gana",
-    description: "Diseñar IA es fácil; anclarla en la cultura y el conocimiento, no."
+    title: "Implementación estratégica",
+    subtitle: "Tecnología integrada a la cultura corporativa",
+    description: "El éxito no está solo en la IA, sino en su adopción organizacional."
   },
   technical: {
-    title: "De oráculos impredecibles",
-    subtitle: "A sistemas expertos confiables",
-    description: "GraphRAG: el mapa que convierte datos dispersos en decisiones precisas."
+    title: "De búsquedas básicas",
+    subtitle: "A sistemas expertos trazables",
+    description: "En Núcleo Ai, tranfromamos datos fragmentados en insights accionables y confiables."
   },
   graphrag: {
-    title: "No basta con buscar",
-    subtitle: "Hay que entender cómo todo está conectado",
-    description: "RAG responde; GraphRAG razona."
+    title: "Comprensión profunda",
+    subtitle: "Conexiones que generan valor",
+    description: "RAG recupera información; GraphRAG construye comprensión contextual."
   },
   cta: {
-    title: "¿Listo para el cambio?",
-    subtitle: "De datos dispersos a decisiones precisas",
-    description: "Conversemos sobre cómo GraphRAG puede transformar tu organización."
+    title: "Transforma tu gestión del conocimiento",
+    subtitle: "De información dispersa a decisiones informadas",
+    description: "30% en optimizacion de tu organización en RRHH."
+  },
+  vision: {
+    title: "De la moda a la misión",
+    subtitle: "IA con fundamentos sólidos",
+    description: "Construyo arquitecturas de conocimiento que perduran más allá del ciclo tecnológico"
   }
 };
 
@@ -181,17 +182,19 @@ export default function Home() {
             const isCurrentSection = currentSection === index;
             const opacity = isCurrentSection ? 'opacity-90' : 'opacity-30';
             
-            // Hide first section when files are visible (first 40% of scroll)
-            const shouldHide = index === 0 && scrollState.progress < 0.4;
+            // No hiding for first section - show immediately with files
+            const shouldHide = false;
             
             return (
               <section 
                 key={key}
-                className="h-screen flex flex-col justify-center items-center px-8 transition-all duration-1000"
+                className={`h-screen flex flex-col px-8 transition-all duration-1000 ${
+                  index === 0 ? 'justify-end items-center pb-32' : 'justify-center items-center'
+                }`}
                 style={{ minHeight: '100vh' }}
               >
                 {!shouldHide && (
-                  <div className={`max-w-4xl text-center space-y-8 backdrop-blur-sm bg-black/20 p-8 rounded-2xl border border-white/10 transition-all duration-1000 ${opacity}`}>
+                  <div className={`max-w-4xl text-center space-y-8 backdrop-blur-sm bg-black/5 p-8 rounded-2xl border border-white/5 transition-all duration-1000 ${opacity}`}>
                 <TextReveal
                   className="text-white text-2xl md:text-4xl font-light mb-4"
                   delay={0.3}

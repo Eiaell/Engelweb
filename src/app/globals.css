@@ -64,11 +64,11 @@
   --radius: 0.625rem;
   
   /* EH Refined Cinematic Color System */
-  --eh-obsidian: #0B0B12;
-  --eh-midnight: #131320;
-  --eh-charcoal: #1A1A2E;
-  --eh-steel: #252542;
-  --eh-slate: #303056;
+  --eh-obsidian: #1a2b4c;
+  --eh-midnight: #1e293b;
+  --eh-charcoal: #334155;
+  --eh-steel: #475569;
+  --eh-slate: #64748b;
   --eh-crimson: #FF4757;
   --eh-crimson-deep: #E94560;
   --eh-gold: #FFA502;
