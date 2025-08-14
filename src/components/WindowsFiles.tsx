@@ -24,6 +24,24 @@ const WindowsFiles: React.FC<WindowsFilesProps> = ({ scrollProgress }) => {
       bounceOffset: 0
     },
     {
+      id: 'pim',
+      type: 'PIM',
+      position: new THREE.Vector3(12, 6, -14),
+      color: '#EC4899',
+      icon: '📁',
+      label: 'PIM',
+      bounceOffset: 2.0
+    },
+    {
+      id: 'dam',
+      type: 'DAM',
+      position: new THREE.Vector3(-15, 5, -16),
+      color: '#8B5CF6',
+      icon: '📁',
+      label: 'DAM',
+      bounceOffset: 2.5
+    },
+    {
       id: 'excel1',
       type: 'XLS',
       position: new THREE.Vector3(5, 4, -15),
@@ -206,7 +224,7 @@ const WindowsFile: React.FC<WindowsFileProps> = ({ file }) => {
         <meshBasicMaterial 
           color={file.color} 
           transparent 
-          opacity={0.8}
+          opacity={0.95}
         />
       </mesh>
       
@@ -216,7 +234,7 @@ const WindowsFile: React.FC<WindowsFileProps> = ({ file }) => {
         <meshBasicMaterial 
           color="#ffffff" 
           transparent 
-          opacity={0.3}
+          opacity={0.15}
         />
       </mesh>
       
@@ -254,7 +272,7 @@ const WindowsFile: React.FC<WindowsFileProps> = ({ file }) => {
         <meshBasicMaterial 
           color={file.color} 
           transparent 
-          opacity={0.2}
+          opacity={0.1}
           blending={THREE.AdditiveBlending}
         />
       </mesh>
