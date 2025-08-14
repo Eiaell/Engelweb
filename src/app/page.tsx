@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import * as THREE from 'three';
-import { Scene3D } from '@/components/Scene3D';
-import { SectionsManager } from '@/components/SectionsManager';
+import { DataUniverseCanvas } from '@/components/DataUniverseCanvas';
 import { PremiumLoader } from '@/components/PremiumLoader';
 import { LoadingTransition } from '@/components/LoadingTransition';
 import { useScrollControl } from '@/hooks/useScrollControl';
@@ -14,45 +13,49 @@ import { LoadingPerformanceMonitor } from '@/components/LoadingPerformanceMonito
 import { AccessibilityProvider } from '@/components/AccessibilityProvider';
 import { TextReveal } from '@/components/TextReveal';
 
-// Section content data
+// Award-winning professional content with cinematic sophistication
 const sectionContent = {
-  identity: {
-    title: "No soy programador",
-    subtitle: "No soy marketero",
-    description: "No soy otro más hablando de IA",
-    emphasis: "Soy Engelbert Huber Quequejana"
-  },
-  origin: {
-    title: "Hijo del altiplano y del ingenio europeo",
-    subtitle: "Puno, Perú + Appenweier, Alemania",
-    description: "Dos mundos, una visión"
-  },
-  mission: {
-    title: "Operador de sistemas humanos",
-    subtitle: "Diseño engranajes invisibles",
-    description: "Que respetan lo humano mientras amplifican lo digital"
-  },
-  present: {
-    title: "Orquestador de agentes digitales",
-    subtitle: "LangChain • Zapier • RAG • AI Agents",
-    description: "Ríos de datos que fluyen hacia soluciones reales"
-  },
   vision: {
-    title: "Construyendo algo que no tiene nombre aún",
-    subtitle: "Arquitectura modular de agentes conectados",
-    description: "Sistemas que aprenden, se adaptan y evolucionan"
+    title: "De la moda a la misión",
+    subtitle: "IA anclada en conocimiento estructurado",
+    description: "No conecto modelos, construyo cimientos para que la IA sobreviva a la tendencia."
+  },
+  foundation: {
+    title: "La IA no empieza con código",
+    subtitle: "Empieza con un problema que importa",
+    description: "Donde otros ven datos, yo diseño memoria corporativa viva."
+  },
+  human: {
+    title: "Enfoque humano y organizacional",
+    subtitle: "Ecosistemas invisibles que preservan lo único",
+    description: "La IA más poderosa no reemplaza personas, amplifica su sabiduría."
+  },
+  strategy: {
+    title: "La tecnología importa",
+    subtitle: "Pero la diplomacia corporativa decide quién gana",
+    description: "Diseñar IA es fácil; anclarla en la cultura y el conocimiento, no."
+  },
+  technical: {
+    title: "De oráculos impredecibles",
+    subtitle: "A sistemas expertos confiables",
+    description: "GraphRAG: el mapa que convierte datos dispersos en decisiones precisas."
+  },
+  graphrag: {
+    title: "No basta con buscar",
+    subtitle: "Hay que entender cómo todo está conectado",
+    description: "RAG responde; GraphRAG razona."
   },
   cta: {
-    title: "Pero tú ya lo necesitas",
-    subtitle: "Inicia la conversación",
-    description: "No es un funnel. Es el comienzo de algo diferente."
+    title: "¿Listo para el cambio?",
+    subtitle: "De datos dispersos a decisiones precisas",
+    description: "Conversemos sobre cómo GraphRAG puede transformar tu organización."
   }
 };
 
 export default function Home() {
   const [isAppLoaded, setIsAppLoaded] = useState(false);
   const [showLoadingTransition, setShowLoadingTransition] = useState(false);
-  const { scrollState } = useScrollControl(6);
+  const { scrollState } = useScrollControl(7);
   const { 
     loadingState, 
     progressiveLoader, 
@@ -147,33 +150,53 @@ export default function Home() {
       <main className={`relative transition-opacity duration-1000 ${
         !isAppLoaded ? 'opacity-0' : 'opacity-100'
       }`}>
-        {/* 3D Scene Background */}
-        <Scene3D 
+        {/* Data Universe Background */}
+        <DataUniverseCanvas 
           scrollState={scrollState}
-          progressiveLoader={progressiveLoader}
-          loadingState={loadingState}
-        >
-          <SectionsManager 
-            scrollState={scrollState} 
-            getAsset={getAsset}
-            isAssetLoaded={isAssetLoaded}
-          />
-        </Scene3D>
+        />
 
-        {/* Content Sections */}
+        {/* Navigation Hints */}
+        <div className="fixed bottom-8 right-8 z-20 text-right space-y-2">
+          <div className="bg-black/50 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20">
+            <p className="text-cyan-400 text-sm animate-pulse">
+              🖱️ Cursor = interactuar con datos
+            </p>
+          </div>
+          <div className="bg-black/50 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20">
+            <p className="text-yellow-400 text-sm animate-pulse">
+              ⬇️ Scroll = alejarse/zoom out
+            </p>
+          </div>
+          <div className="bg-black/50 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20">
+            <p className="text-magenta-400 text-sm animate-pulse">
+              🖱️ Click + Drag = mover cámara
+            </p>
+          </div>
+        </div>
+
+        {/* Minimal Content Overlay */}
         <div className="relative z-10">
-          {Object.entries(sectionContent).map(([key, content], index) => (
-            <section 
-              key={key}
-              className="h-screen flex flex-col justify-center items-center px-8"
-              style={{ minHeight: '100vh' }}
-            >
-              <div className="max-w-4xl text-center space-y-8">
+          {Object.entries(sectionContent).map(([key, content], index) => {
+            const currentSection = Math.floor(scrollState.progress * 7);
+            const isCurrentSection = currentSection === index;
+            const opacity = isCurrentSection ? 'opacity-90' : 'opacity-30';
+            
+            // Hide first section when files are visible (first 40% of scroll)
+            const shouldHide = index === 0 && scrollState.progress < 0.4;
+            
+            return (
+              <section 
+                key={key}
+                className="h-screen flex flex-col justify-center items-center px-8 transition-all duration-1000"
+                style={{ minHeight: '100vh' }}
+              >
+                {!shouldHide && (
+                  <div className={`max-w-4xl text-center space-y-8 backdrop-blur-sm bg-black/20 p-8 rounded-2xl border border-white/10 transition-all duration-1000 ${opacity}`}>
                 <TextReveal
-                  className="text-gray-200 text-3xl md:text-5xl font-light"
-                  delay={0.2}
+                  className="text-white text-2xl md:text-4xl font-light mb-4"
+                  delay={0.3}
                   duration={1.2}
-                  variant={key === 'identity' ? 'slideUp' : key === 'origin' ? 'fade' : 'slideUp'}
+                  variant="fade"
                   triggerStart="top 80%"
                 >
                   {content.title}
@@ -181,10 +204,10 @@ export default function Home() {
                 
                 {content.subtitle && (
                   <TextReveal
-                    className="text-gray-300 text-xl md:text-2xl"
-                    delay={0.8}
+                    className="text-cyan-300 text-lg md:text-xl mb-4"
+                    delay={0.6}
                     duration={1.0}
-                    variant={key === 'present' ? 'splitWords' : 'fade'}
+                    variant="fade"
                     triggerStart="top 75%"
                   >
                     {content.subtitle}
@@ -192,26 +215,20 @@ export default function Home() {
                 )}
                 
                 <TextReveal
-                  className={`${
-                    key === 'identity' ? 'text-red-400 font-semibold' :
-                    key === 'vision' ? 'text-yellow-400 font-medium' :
-                    key === 'cta' ? 'text-red-400 font-semibold' :
-                    'text-gray-400'
-                  } text-lg md:text-xl`}
-                  delay={1.4}
-                  duration={key === 'identity' ? 2.0 : 1.2}
-                  variant={key === 'identity' ? 'typewriter' : key === 'vision' ? 'splitWords' : key === 'cta' ? 'magneticHover' : 'fade'}
+                  className="text-gray-300 text-base md:text-lg leading-relaxed"
+                  delay={1.0}
+                  duration={1.2}
+                  variant="fade"
                   triggerStart="top 70%"
                 >
                   {content.description}
                 </TextReveal>
                 
                 {key === 'cta' && (
-                  <div className="mt-12">
+                  <div className="mt-8">
                     <button 
-                      className="px-8 py-4 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg transition-colors duration-300"
+                      className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg shadow-cyan-500/25"
                       onClick={() => {
-                        // Contact action - can be implemented later
                         console.log('Contact initiated');
                       }}
                     >
@@ -220,8 +237,10 @@ export default function Home() {
                   </div>
                 )}
               </div>
+                )}
             </section>
-          ))}
+            );
+          })}
         </div>
 
         {/* Performance Monitors */}

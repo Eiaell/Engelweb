@@ -13,7 +13,11 @@
       "Bash(rm:*)",
       "Bash(git push:*)",
       "Bash(npm run build:*)",
-      "Bash(powershell:*)"
+      "Bash(powershell:*)",
+      "Bash(dir \"C:\\Users\\Huber\\.claude\\agents\")",
+      "Bash(dir \"C:\\Users\\Huber\\.claude\")",
+      "Bash(if not exist \"C:\\Users\\Huber\\.claude\\settings.local.json\" echo \"Settings file does not exist\" else echo \"Settings file exists\")",
+      "Bash(test:*)"
     ],
     "deny": []
   }

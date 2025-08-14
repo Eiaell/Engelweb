@@ -24,6 +24,68 @@ export interface CameraState {
   lookAt?: [number, number, number];
 }
 
+// Enhanced camera behavior types
+export interface CameraMicroMovement {
+  breathing: {
+    intensity: number;
+    frequency: number;
+    enabled: boolean;
+  };
+  drift: {
+    intensity: number;
+    speed: number;
+    enabled: boolean;
+  };
+  sway: {
+    intensity: number;
+    frequency: number;
+    enabled: boolean;
+  };
+}
+
+export interface CameraDollyShot {
+  type: 'track-in' | 'track-out' | 'push-in' | 'pull-out';
+  distance: number;
+  duration: number;
+  ease: string;
+  maintainFraming: boolean;
+}
+
+export interface CameraFocusPull {
+  from: number;
+  to: number;
+  duration: number;
+  ease: string;
+  blurIntensity: number;
+}
+
+export interface CameraPersonality {
+  name: string;
+  microMovements: CameraMicroMovement;
+  responsiveness: number;
+  smoothing: number;
+  anticipation: number;
+  overshoot: number;
+}
+
+export interface CameraInterestPoint {
+  position: [number, number, number];
+  weight: number;
+  falloff: number;
+  active: boolean;
+}
+
+export interface CameraBounds {
+  position: {
+    min: [number, number, number];
+    max: [number, number, number];
+  };
+  rotation: {
+    min: [number, number, number];
+    max: [number, number, number];
+  };
+}
+
 export interface CameraKeyframe extends CameraState {
   progress: number;
   duration: number;
@@ -32,6 +94,12 @@ export interface CameraKeyframe extends CameraState {
     intensity: number;
     duration: number;
   };
+  dollyShot?: CameraDollyShot;
+  focusPull?: CameraFocusPull;
+  personality?: string;
+  interestPoints?: CameraInterestPoint[];
+  bounds?: CameraBounds;
+  anticipationDistance?: number;
 }
 
 export interface SceneAnimation {

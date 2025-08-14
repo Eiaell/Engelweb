@@ -9,6 +9,7 @@ import { IdentitySection } from './sections/IdentitySection';
 import { OriginSection } from './sections/OriginSection';
 import { MissionSection } from './sections/MissionSection';
 import { PresentSection } from './sections/PresentSection';
+import DataGraph3D from './DataGraph3D';
 import { VisionSection } from './sections/VisionSection';
 import { CTASection } from './sections/CTASection';
 
@@ -48,6 +49,12 @@ export const SectionsManager: React.FC<SectionsManagerProps> = ({
       position: [1, 0, 5],
       rotation: [0, 0.1, 0],
       fov: 75
+    },
+    // Data Graph Section - Immersive data space
+    {
+      position: [0, 0, 5],
+      rotation: [0, 0, 0],
+      fov: 90
     },
     // Vision Section - Elevated view of city
     {
@@ -90,15 +97,21 @@ export const SectionsManager: React.FC<SectionsManagerProps> = ({
       duration: 1
     },
     {
+      name: 'datagraph',
+      component: DataGraph3D,
+      camera: cameraConfigs[4],
+      duration: 1
+    },
+    {
       name: 'vision',
       component: VisionSection,
-      camera: cameraConfigs[4],
+      camera: cameraConfigs[5],
       duration: 1
     },
     {
       name: 'cta',
       component: CTASection,
-      camera: cameraConfigs[5],
+      camera: cameraConfigs[6],
       duration: 1
     }
   ], [cameraConfigs]);
