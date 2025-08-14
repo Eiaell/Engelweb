@@ -113,8 +113,13 @@ export const PremiumLoader: React.FC<PremiumLoaderProps> = ({
       <div className="text-center space-y-12 max-w-4xl px-8">
         {/* Enhanced EH Logo Animation */}
         <div className="relative">
-          <div className="text-display tracking-wider">
-            Orquestador
+          {/* Welcome text */}
+          <div className="text-body-large mb-4 opacity-80">
+            Bienvenidos/Willkommen
+          </div>
+          
+          <div className="text-hero tracking-wider">
+            AI ORCHESTRATOR
           </div>
           
           {/* Enhanced animated underline with glow */}

@@ -114,50 +114,37 @@ const WindowsFiles: React.FC<WindowsFilesProps> = ({ scrollProgress }) => {
 
   return (
     <group ref={groupRef}>
-      {/* Large illuminated sign */}
+      {/* Large illuminated text - no background */}
       <group position={[0, 12, -15]}>
-        {/* Sign background - glowing white rectangle */}
-        <mesh>
-          <boxGeometry args={[20, 6, 0.5]} />
-          <meshBasicMaterial 
-            color="#ffffff" 
-            transparent 
-            opacity={0.9}
-          />
-        </mesh>
-        
-        {/* Sign glow effect */}
-        <mesh position={[0, 0, 0.1]}>
-          <boxGeometry args={[22, 8, 0.1]} />
-          <meshBasicMaterial 
-            color="#ffffff" 
-            transparent 
-            opacity={0.3}
-            blending={THREE.AdditiveBlending}
-          />
-        </mesh>
-        
-        {/* Sign text */}
+        {/* Main text - neon white curved */}
         <Text
-          text="EMPRESA"
-          fontSize={3}
-          color="#000000"
+          text="USUARIO"
+          fontSize={4}
+          color="#ffffff"
           anchorX="center"
           anchorY="middle"
-          position={[0, 1.5, 0.3]}
+          position={[0, 1.5, 0]}
+          curveRadius={10}
         >
-          <meshBasicMaterial color="#000000" />
+          <meshBasicMaterial 
+            color="#ffffff"
+            toneMapped={false}
+          />
         </Text>
         
         <Text
           text="DATA NO ESTRUCTURADA"
-          fontSize={1.8}
-          color="#000000"
+          fontSize={2.2}
+          color="#ffffff"
           anchorX="center"
           anchorY="middle"
-          position={[0, -1, 0.3]}
+          position={[0, -1, 0]}
+          curveRadius={12}
         >
-          <meshBasicMaterial color="#000000" />
+          <meshBasicMaterial 
+            color="#ffffff"
+            toneMapped={false}
+          />
         </Text>
       </group>
 
