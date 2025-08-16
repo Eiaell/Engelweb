@@ -83,15 +83,15 @@ const GraphRAGJourney: React.FC<GraphRAGJourneyProps> = ({ scrollProgress }) => 
     return new THREE.BufferGeometry().setFromPoints(points);
   }, [journeySteps]);
 
-  // Create dotted line material
+  // Create dotted line material - DISABLED
   const lineMaterial = useMemo(() => {
     return new THREE.LineDashedMaterial({
-      color: '#FF0000',
+      color: '#00000000',
       dashSize: 3,
       gapSize: 2,
       linewidth: 3,
       transparent: true,
-      opacity: 0.8
+      opacity: 0.0 // HIDDEN - no red line
     });
   }, []);
 
@@ -289,7 +289,7 @@ const Arrow: React.FC<ArrowProps> = ({ position, direction, scrollProgress }) =>
       <mesh>
         <coneGeometry args={[0.5, 2, 8]} />
         <meshBasicMaterial 
-          color="#FF0000" 
+          color="#00000000" 
           transparent 
           opacity={arrowOpacity}
         />
@@ -299,7 +299,7 @@ const Arrow: React.FC<ArrowProps> = ({ position, direction, scrollProgress }) =>
       <mesh position={[0, -1.5, 0]}>
         <cylinderGeometry args={[0.1, 0.1, 2, 8]} />
         <meshBasicMaterial 
-          color="#FF0000" 
+          color="#00000000" 
           transparent 
           opacity={arrowOpacity}
         />
@@ -309,7 +309,7 @@ const Arrow: React.FC<ArrowProps> = ({ position, direction, scrollProgress }) =>
       <mesh>
         <coneGeometry args={[0.8, 2.5, 8]} />
         <meshBasicMaterial 
-          color="#FF0000" 
+          color="#00000000" 
           transparent 
           opacity={arrowOpacity * 0.3}
           blending={THREE.AdditiveBlending}
@@ -338,7 +338,7 @@ const ConnectionLine: React.FC<ConnectionLineProps> = ({ scrollProgress }) => {
 
   const connectionMaterial = useMemo(() => {
     return new THREE.LineDashedMaterial({
-      color: '#FF0000',
+      color: '#00000000',
       dashSize: 2,
       gapSize: 1,
       linewidth: 2,

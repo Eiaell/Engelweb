@@ -237,7 +237,10 @@ const DataUniverseScene: React.FC<DataUniverseSceneProps> = ({
       />
       
       {/* Entity Extraction Scene - Third section */}
-      <InteractiveEntityExtractionScene scrollProgress={scrollProgress} />
+      <InteractiveEntityExtractionScene 
+        scrollProgress={scrollProgress} 
+        sceneTriggered={sceneTriggered.entityExtraction}
+      />
       
       {/* Knowledge Graph Scene - Fourth section */}
       <InteractiveKnowledgeGraphScene scrollProgress={scrollProgress} />
