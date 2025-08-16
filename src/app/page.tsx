@@ -50,10 +50,10 @@ export default function Home() {
   const [sceneTriggered, setSceneTriggered] = useState({
     vectorization: false,
     entityExtraction: false,
-    knowledgeGraph: false
-    // REMOVED: queryResponse: false
+    knowledgeGraph: false,
+    claudeInterface: false
   });
-  const { scrollState } = useScrollControl(5); // 5 secciones del proceso GraphRAG (con texto final)
+  const { scrollState } = useScrollControl(7); // 7 secciones para extender el mundo
   const { 
     loadingState, 
     progressiveLoader, 
@@ -99,7 +99,7 @@ export default function Home() {
     if (isAppLoaded && progressiveLoader) {
       // Map scroll progress to 3D position
       const scrollProgress = scrollState.progress;
-      const yPosition = -scrollProgress * 50; // 50 units for 6 sections
+      const yPosition = -scrollProgress * 70; // 70 units for 7 sections
       updatePosition(new THREE.Vector3(0, yPosition, 0));
     }
   }, [scrollState.progress, isAppLoaded, progressiveLoader, updatePosition]);
@@ -115,12 +115,12 @@ export default function Home() {
 
   // Detectar cuando los títulos cruzan la línea media de la pantalla
   useEffect(() => {
-    // Definir los rangos donde cada título empieza su animación desde abajo - uniformes
+    // Definir los rangos donde cada título empieza su animación desde abajo - ajustados
     const titleAnimationRanges = [
-      { section: 'vectorization', start: 0.20, trigger: 0.25 },    // Fragmentación - trigger en mitad de sección
-      { section: 'entityExtraction', start: 0.40, trigger: 0.45 }, // Extracción - trigger en mitad de sección
-      { section: 'knowledgeGraph', start: 0.60, trigger: 0.65 }    // Grafo - trigger en mitad de sección
-      // No hay trigger para consulta (solo texto)
+      { section: 'vectorization', start: 0.16, trigger: 0.20 },    // Fragmentación - trigger en mitad de sección
+      { section: 'entityExtraction', start: 0.32, trigger: 0.36 }, // Extracción - trigger en mitad de sección
+      { section: 'knowledgeGraph', start: 0.48, trigger: 0.54 },   // Grafo - trigger en mitad de sección
+      { section: 'claudeInterface', start: 0.98, trigger: 0.98 }   // Claude Interface - aparece solo al final
     ];
 
     titleAnimationRanges.forEach(({ section, start, trigger }) => {
@@ -202,21 +202,21 @@ export default function Home() {
         {/* Minimal Content Overlay */}
         <div className="relative z-10">
           {Object.entries(sectionContent).map(([key, content], index) => {
-            // Define text timing ranges - grafo extendido para mayor impacto
-            const textRanges = [
-              { start: 0.00, end: 0.20 },  // Ingesta de datos (0-20%)
-              { start: 0.20, end: 0.40 },  // Fragmentación (20-40%)
-              { start: 0.40, end: 0.60 },  // Extracción (40-60%)
-              { start: 0.60, end: 0.90 },  // Grafo (60-90%) - EXTENDIDO para mayor duración
-              { start: 0.90, end: 1.00 }   // Consulta (90-100%) - reducido pero presente
+            // Define cuándo cada texto empieza a aparecer - una vez que aparece, se queda para siempre
+            const textStartTimes = [
+              0.00,  // Ingesta de datos - aparece desde el inicio
+              0.16,  // Fragmentación - aparece al 16%
+              0.32,  // Extracción - aparece al 32%
+              0.48,  // Grafo - aparece al 48%
+              0.70   // Consulta - aparece al 70%
             ];
             
-            const range = textRanges[index] || { start: 0, end: 0.2 };
-            const isInTextRange = scrollState.progress >= range.start && scrollState.progress <= range.end;
+            const startTime = textStartTimes[index] || 0;
+            const hasAppeared = scrollState.progress >= startTime;
             const opacity = 'opacity-90'; // SIEMPRE VISIBLE - sin fade
             
-            // Los textos siempre son visibles cuando están en su sección
-            const shouldHide = !isInTextRange;
+            // Una vez que aparece, nunca se oculta
+            const shouldHide = !hasAppeared;
             
             return (
               <section 
@@ -297,7 +297,7 @@ export default function Home() {
               />
             </div>
             <span className="text-gray-400 text-sm">
-              {scrollState.currentSection + 1} / 5
+              {scrollState.currentSection + 1} / 7
             </span>
             
             {/* Loading indicator for ongoing background loading */}
@@ -308,6 +308,24 @@ export default function Home() {
             )}
           </div>
         </div>
+
+        {/* Botón Superman para volver al inicio - aparece cuando estamos al final */}
+        {scrollState.progress > 0.80 && (
+          <div className="fixed top-8 left-8 z-30">
+            <button 
+              onClick={() => {
+                // Scroll suave tipo Superman al inicio
+                window.scrollTo({
+                  top: 0,
+                  behavior: 'smooth'
+                });
+              }}
+              className="bg-gradient-to-r from-blue-600 to-red-600 hover:from-blue-500 hover:to-red-500 text-white font-bold py-4 px-6 rounded-full transition-all duration-300 transform hover:scale-110 shadow-lg shadow-blue-500/25 animate-pulse"
+            >
+              🦸‍♂️ VOLVER AL INICIO
+            </button>
+          </div>
+        )}
       </main>
     </AccessibilityProvider>
   );

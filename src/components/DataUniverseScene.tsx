@@ -7,6 +7,7 @@ import WindowsFiles from './WindowsFiles';
 import InteractiveVectorizationScene from './InteractiveVectorizationScene';
 import InteractiveEntityExtractionScene from './InteractiveEntityExtractionScene';
 import SimpleKnowledgeGraphScene from './SimpleKnowledgeGraphScene';
+import ClaudeInterfaceScene from './ClaudeInterfaceScene';
 // REMOVED: import InteractiveQueryResponseScene from './InteractiveQueryResponseScene';
 import * as THREE from 'three';
 
@@ -31,7 +32,7 @@ interface DataUniverseSceneProps {
     vectorization: boolean;
     entityExtraction: boolean;
     knowledgeGraph: boolean;
-    // REMOVED: queryResponse: boolean;
+    claudeInterface: boolean;
   };
 }
 
@@ -54,8 +55,8 @@ const DataUniverseScene: React.FC<DataUniverseSceneProps> = ({
   sceneTriggered = {
     vectorization: false,
     entityExtraction: false,
-    knowledgeGraph: false
-    // REMOVED: queryResponse: false
+    knowledgeGraph: false,
+    claudeInterface: false
   }
 }) => {
   const groupRef = useRef<THREE.Group>(null);
@@ -223,9 +224,11 @@ const DataUniverseScene: React.FC<DataUniverseSceneProps> = ({
         sceneTriggered={sceneTriggered?.knowledgeGraph} 
       />
       
-      {/* REMOVED: Query Response Scene - Fifth section
-      <InteractiveQueryResponseScene scrollProgress={scrollProgress} />
-      */}
+      {/* Claude Interface Scene - Fifth section */}
+      <ClaudeInterfaceScene 
+        scrollProgress={scrollProgress} 
+        sceneTriggered={sceneTriggered?.claudeInterface} 
+      />
       
       {/* GraphRAG Journey Path */}
       
