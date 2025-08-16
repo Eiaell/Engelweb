@@ -129,66 +129,63 @@ const InteractiveVectorizationScene: React.FC<InteractiveVectorizationSceneProps
           <meshBasicMaterial
             color="#228B22"
             transparent={false}
+            opacity={1.0}
             wireframe={false}
           />
         </mesh>
         
-        {/* Textos dentro del cubo - caras del dado */}
+        {/* Textos del cubo - todos visibles desde el frente */}
         <Text
           text="TOKENIZE"
-          fontSize={3}
+          fontSize={1.5}
           color="#FFFFFF"
           anchorX="center"
           anchorY="middle"
-          position={[0, 6, 16]}
+          position={[-8, 8, 18]}
         >
           <meshBasicMaterial color="#FFFFFF" toneMapped={false} />
         </Text>
         
         <Text
           text="EMBED"
-          fontSize={3}
+          fontSize={1.5}
           color="#FFFFFF"
           anchorX="center"
           anchorY="middle"
-          position={[0, 6, -16]}
-          rotation={[0, Math.PI, 0]}
+          position={[8, 8, 18]}
         >
           <meshBasicMaterial color="#FFFFFF" toneMapped={false} />
         </Text>
         
         <Text
           text="INDEX"
-          fontSize={3}
+          fontSize={1.5}
           color="#FFFFFF"
           anchorX="center"
           anchorY="middle"
-          position={[16, 6, 0]}
-          rotation={[0, -Math.PI/2, 0]}
+          position={[-8, -8, 18]}
         >
           <meshBasicMaterial color="#FFFFFF" toneMapped={false} />
         </Text>
         
         <Text
           text="STORE"
-          fontSize={3}
+          fontSize={1.5}
           color="#FFFFFF"
           anchorX="center"
           anchorY="middle"
-          position={[-16, 6, 0]}
-          rotation={[0, Math.PI/2, 0]}
+          position={[8, -8, 18]}
         >
           <meshBasicMaterial color="#FFFFFF" toneMapped={false} />
         </Text>
         
         <Text
           text="VECTOR DB"
-          fontSize={2.5}
+          fontSize={4}
           color="#FFFFFF"
           anchorX="center"
           anchorY="middle"
-          position={[0, 16, 0]}
-          rotation={[-Math.PI/2, 0, 0]}
+          position={[0, 0, 18]}
         >
           <meshBasicMaterial color="#FFFFFF" toneMapped={false} />
         </Text>
@@ -197,14 +194,14 @@ const InteractiveVectorizationScene: React.FC<InteractiveVectorizationSceneProps
         <OrbitingDocuments documentTypes={documentTypes} />
       </group>
 
-      {/* Scene title */}
+      {/* Scene title - movido lejos del cubo */}
       <Text
         text="FRAGMENTACIÓN Y VECTORIZACIÓN"
-        fontSize={2}
+        fontSize={2.5}
         color="#00FFFF"
         anchorX="center"
         anchorY="middle"
-        position={[0, 15, -30]}
+        position={[0, 35, -25]}
       >
         <meshBasicMaterial color="#00FFFF" toneMapped={false} />
       </Text>
@@ -230,7 +227,7 @@ const OrbitingDocuments: React.FC<OrbitingDocumentsProps> = ({ documentTypes }) 
       if (typeGroup.type === 'Group') {
         typeGroup.children.forEach((docGroup, docIndex) => {
           if (docGroup.type === 'Group') {
-            const baseAngle = (docIndex / 4) * Math.PI * 2 + typeIndex * 0.8;
+            const baseAngle = (docIndex / 8) * Math.PI * 2 + typeIndex * 0.8;
             const radius = 35 + typeIndex * 6;
             const orbitSpeed = 0.3 + typeIndex * 0.15;
             const currentAngle = baseAngle + time * orbitSpeed;
@@ -249,7 +246,7 @@ const OrbitingDocuments: React.FC<OrbitingDocumentsProps> = ({ documentTypes }) 
     <group ref={groupRef}>
       {documentTypes.map((docType, index) => (
         <group key={docType.type}>
-          {Array.from({ length: 4 }, (_, i) => (
+          {Array.from({ length: 8 }, (_, i) => (
             <group key={i}>
               {/* Documento como rectángulo */}
               <mesh>
