@@ -50,10 +50,10 @@ export default function Home() {
   const [sceneTriggered, setSceneTriggered] = useState({
     vectorization: false,
     entityExtraction: false,
-    knowledgeGraph: false,
-    queryResponse: false
+    knowledgeGraph: false
+    // REMOVED: queryResponse: false
   });
-  const { scrollState } = useScrollControl(5); // 5 secciones del proceso GraphRAG
+  const { scrollState } = useScrollControl(5); // 5 secciones del proceso GraphRAG (con texto final)
   const { 
     loadingState, 
     progressiveLoader, 
@@ -115,12 +115,12 @@ export default function Home() {
 
   // Detectar cuando los títulos cruzan la línea media de la pantalla
   useEffect(() => {
-    // Definir los rangos donde cada título empieza su animación desde abajo
+    // Definir los rangos donde cada título empieza su animación desde abajo - uniformes
     const titleAnimationRanges = [
-      { section: 'vectorization', start: 0.15, trigger: 0.20 },  // Fragmentación - trigger cuando texto está en centro
-      { section: 'entityExtraction', start: 0.35, trigger: 0.38 }, // Extracción  
-      { section: 'knowledgeGraph', start: 0.55, trigger: 0.58 },   // Grafo
-      { section: 'queryResponse', start: 0.75, trigger: 0.78 }    // Consulta
+      { section: 'vectorization', start: 0.20, trigger: 0.25 },    // Fragmentación - trigger en mitad de sección
+      { section: 'entityExtraction', start: 0.40, trigger: 0.45 }, // Extracción - trigger en mitad de sección
+      { section: 'knowledgeGraph', start: 0.60, trigger: 0.65 }    // Grafo - trigger en mitad de sección
+      // No hay trigger para consulta (solo texto)
     ];
 
     titleAnimationRanges.forEach(({ section, start, trigger }) => {
@@ -202,13 +202,13 @@ export default function Home() {
         {/* Minimal Content Overlay */}
         <div className="relative z-10">
           {Object.entries(sectionContent).map(([key, content], index) => {
-            // Define text timing ranges - appear BEFORE animations
+            // Define text timing ranges - grafo extendido para mayor impacto
             const textRanges = [
-              { start: 0.0, end: 0.20 },   // Ingesta de datos (0-20%)
-              { start: 0.15, end: 0.40 },  // Fragmentación (15-40%) - extended to match 3D scene duration
-              { start: 0.35, end: 0.45 },  // Extracción (35-45%)
-              { start: 0.55, end: 0.65 },  // Grafo (55-65%)
-              { start: 0.75, end: 0.85 }   // Consulta (75-85%)
+              { start: 0.00, end: 0.20 },  // Ingesta de datos (0-20%)
+              { start: 0.20, end: 0.40 },  // Fragmentación (20-40%)
+              { start: 0.40, end: 0.60 },  // Extracción (40-60%)
+              { start: 0.60, end: 0.90 },  // Grafo (60-90%) - EXTENDIDO para mayor duración
+              { start: 0.90, end: 1.00 }   // Consulta (90-100%) - reducido pero presente
             ];
             
             const range = textRanges[index] || { start: 0, end: 0.2 };

@@ -4,11 +4,10 @@ import { useRef, useMemo, useState, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Text } from '@react-three/drei';
 import WindowsFiles from './WindowsFiles';
-import GraphRAGJourney from './GraphRAGJourney';
 import InteractiveVectorizationScene from './InteractiveVectorizationScene';
 import InteractiveEntityExtractionScene from './InteractiveEntityExtractionScene';
-import InteractiveKnowledgeGraphScene from './InteractiveKnowledgeGraphScene';
-import InteractiveQueryResponseScene from './InteractiveQueryResponseScene';
+import SimpleKnowledgeGraphScene from './SimpleKnowledgeGraphScene';
+// REMOVED: import InteractiveQueryResponseScene from './InteractiveQueryResponseScene';
 import * as THREE from 'three';
 
 interface DataChunk {
@@ -32,36 +31,12 @@ interface DataUniverseSceneProps {
     vectorization: boolean;
     entityExtraction: boolean;
     knowledgeGraph: boolean;
-    queryResponse: boolean;
+    // REMOVED: queryResponse: boolean;
   };
 }
 
-// All text content distributed across the universe
-const allTextContent = `
-De la moda a la misión: IA anclada en conocimiento estructurado.
-
-No conecto modelos, construyo cimientos para que la IA sobreviva a la tendencia.
-
-La IA no empieza con código: empieza con un problema que importa.
-
-Donde otros ven datos, yo diseño memoria corporativa viva.
-
-Ecosistemas invisibles que preservan lo que hace única a tu empresa.
-
-La IA más poderosa no reemplaza personas, amplifica su sabiduría.
-
-La tecnología importa, pero la diplomacia corporativa decide quién gana.
-
-Diseñar IA es fácil; anclarla en la cultura y el conocimiento, no.
-
-De oráculos impredecibles a sistemas expertos confiables.
-
-GraphRAG: el mapa que convierte datos dispersos en decisiones precisas.
-
-No basta con buscar, hay que entender cómo todo está conectado.
-
-RAG responde; GraphRAG razona.
-`;
+// REMOVED: Floating text content that was creating unwanted background words
+const allTextContent = ``;
 
 // Phosphorescent color palette
 const colors = {
@@ -79,8 +54,8 @@ const DataUniverseScene: React.FC<DataUniverseSceneProps> = ({
   sceneTriggered = {
     vectorization: false,
     entityExtraction: false,
-    knowledgeGraph: false,
-    queryResponse: false
+    knowledgeGraph: false
+    // REMOVED: queryResponse: false
   }
 }) => {
   const groupRef = useRef<THREE.Group>(null);
@@ -243,15 +218,18 @@ const DataUniverseScene: React.FC<DataUniverseSceneProps> = ({
       />
       
       {/* Knowledge Graph Scene - Fourth section */}
-      <InteractiveKnowledgeGraphScene scrollProgress={scrollProgress} />
+      <SimpleKnowledgeGraphScene 
+        scrollProgress={scrollProgress} 
+        sceneTriggered={sceneTriggered?.knowledgeGraph} 
+      />
       
-      {/* Query Response Scene - Fifth section */}
+      {/* REMOVED: Query Response Scene - Fifth section
       <InteractiveQueryResponseScene scrollProgress={scrollProgress} />
+      */}
       
       {/* GraphRAG Journey Path */}
-      <GraphRAGJourney scrollProgress={scrollProgress} />
       
-      {/* Data chunks with LOD rendering */}
+      {/* REMOVED: Data chunks that were creating floating background text
       {chunks.map((chunk, index) => {
         // LOD: Only render chunks near current camera position
         const currentCameraZ = 20 + (scrollProgress * scrollProgress * 200);
@@ -275,9 +253,11 @@ const DataUniverseScene: React.FC<DataUniverseSceneProps> = ({
           />
         );
       })}
+      */}
       
-      {/* Connection lines between nearby chunks */}
+      {/* REMOVED: Connection lines between chunks (no longer needed)
       {performanceGrade === 'high' && <ConnectionLines chunks={chunks} scrollProgress={scrollProgress} />}
+      */}
     </group>
   );
 };

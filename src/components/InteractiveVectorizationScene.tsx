@@ -65,8 +65,8 @@ const InteractiveVectorizationScene: React.FC<InteractiveVectorizationSceneProps
     if (!groupRef.current) return;
 
     const time = state.clock.elapsedTime;
-    const sectionStart = 0.18;
-    const sectionEnd = 0.40;
+    const sectionStart = 0.20;  // Inicio uniforme de segunda sección
+    const sectionEnd = 0.40;    // Final uniforme de segunda sección
     const localProgress = Math.min(1, Math.max(0, (scrollProgress - sectionStart) / (sectionEnd - sectionStart)));
 
     // Efecto horizonte: 80% en primer plano, 20% alejándose
@@ -112,8 +112,8 @@ const InteractiveVectorizationScene: React.FC<InteractiveVectorizationSceneProps
   });
 
   // Show during vectorization section
-  const sectionStart = 0.18;
-  const sectionEnd = 0.40;
+  const sectionStart = 0.20;  // Inicio uniforme de segunda sección  
+  const sectionEnd = 0.40;    // Final uniforme de segunda sección
   if (scrollProgress < sectionStart || scrollProgress > sectionEnd) return null;
 
   return (
@@ -129,7 +129,10 @@ const InteractiveVectorizationScene: React.FC<InteractiveVectorizationSceneProps
           <meshBasicMaterial
             color="#FF6B35"
             transparent={false}
-            opacity={1.0}
+            opacity={1}
+            alphaTest={0}
+            depthWrite={true}
+            depthTest={true}
             wireframe={false}
           />
         </mesh>

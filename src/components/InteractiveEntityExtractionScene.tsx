@@ -55,8 +55,8 @@ const InteractiveEntityExtractionScene: React.FC<InteractiveEntityExtractionScen
     if (sceneTriggered && !sceneVisible) {
       setSceneVisible(true);
       if (groupRef.current) {
-        gsap.set(groupRef.current.scale, { x: 3, y: 3, z: 3 }); // MÁS GRANDE que vectorización
-        gsap.set(groupRef.current.position, { x: 0, y: 0, z: 10 }); // MÁS CERCA
+        gsap.set(groupRef.current.scale, { x: 4, y: 4, z: 4 }); // AÚN MÁS GRANDE
+        gsap.set(groupRef.current.position, { x: 0, y: 0, z: 15 }); // MÁS CERCA
         gsap.set(groupRef.current.rotation, { y: 0 });
       }
     }
@@ -67,49 +67,48 @@ const InteractiveEntityExtractionScene: React.FC<InteractiveEntityExtractionScen
     if (!groupRef.current) return;
 
     const time = state.clock.elapsedTime;
-    const sectionStart = 0.35; // Tercera sección
-    const sectionEnd = 0.55;   // Hasta cuarta sección
+    const sectionStart = 0.40; // Tercera sección uniforme (40-60%)
+    const sectionEnd = 0.60;   // Final uniforme de tercera sección
     const localProgress = Math.min(1, Math.max(0, (scrollProgress - sectionStart) / (sectionEnd - sectionStart)));
 
-    // Efecto horizonte: 80% en primer plano, 20% alejándose
+    // Mantener prominente casi todo el tiempo, solo alejarse al final
     if (sceneVisible && localProgress > 0) {
-      const horizonThreshold = 0.8;
+      const horizonThreshold = 0.95; // Ahora 95% en primer plano
       
       if (localProgress <= horizonThreshold) {
-        // Primeros 80%: mantener GRANDE en primer plano
-        const stayProgress = localProgress / horizonThreshold;
+        // Primeros 95%: mantener GRANDE y prominente (casi sin cambios)
         gsap.set(groupRef.current.scale, { 
-          x: 3 - (stayProgress * 0.5), // De 3 a 2.5 (sigue siendo grande)
-          y: 3 - (stayProgress * 0.5), 
-          z: 3 - (stayProgress * 0.5) 
+          x: 4, // Mantener tamaño completo
+          y: 4, 
+          z: 4 
         });
         gsap.set(groupRef.current.position, { 
           x: 0, 
           y: 0, 
-          z: 10 - (stayProgress * 3) // De Z=10 a Z=7
+          z: 15 // Mantener cerca
         });
       } else {
-        // Últimos 20%: alejamiento rápido hacia el horizonte
+        // Últimos 5%: alejamiento rápido hacia el horizonte
         const horizonProgress = (localProgress - horizonThreshold) / (1 - horizonThreshold);
         const easeOut = 1 - Math.pow(1 - horizonProgress, 3);
         
         gsap.set(groupRef.current.scale, { 
-          x: 2.5 - (easeOut * 2.3), // De 2.5 a 0.2
-          y: 2.5 - (easeOut * 2.3), 
-          z: 2.5 - (easeOut * 2.3) 
+          x: 4 - (easeOut * 3.8), // De 4 a 0.2 muy rápido
+          y: 4 - (easeOut * 3.8), 
+          z: 4 - (easeOut * 3.8) 
         });
         gsap.set(groupRef.current.position, { 
           x: 0, 
           y: easeOut * -8, // Bajar hacia el horizonte
-          z: 7 - (easeOut * 60) // Alejarse hacia Z=-53
+          z: 15 - (easeOut * 68) // Alejarse hacia Z=-53
         });
       }
     }
   });
 
   // Show during entity extraction section
-  const sectionStart = 0.35;
-  const sectionEnd = 0.55;
+  const sectionStart = 0.40; // Tercera sección uniforme
+  const sectionEnd = 0.60;   // Final uniforme de tercera sección
   if (scrollProgress < sectionStart || scrollProgress > sectionEnd) return null;
 
   return (
@@ -119,7 +118,7 @@ const InteractiveEntityExtractionScene: React.FC<InteractiveEntityExtractionScen
         
         {/* Central Processing Hub */}
         <mesh>
-          <sphereGeometry args={[8, 32, 32]} />
+          <sphereGeometry args={[12, 32, 32]} />
           <meshBasicMaterial
             color="#4F46E5"
             transparent
@@ -134,14 +133,14 @@ const InteractiveEntityExtractionScene: React.FC<InteractiveEntityExtractionScen
             {/* Cluster Hub */}
             <group 
               position={[
-                Math.cos((typeIndex / entityTypes.length) * Math.PI * 2) * 25,
-                Math.sin((typeIndex / entityTypes.length) * Math.PI * 2) * 15,
-                Math.sin((typeIndex / entityTypes.length) * Math.PI * 2) * 8
+                Math.cos((typeIndex / entityTypes.length) * Math.PI * 2) * 35,
+                Math.sin((typeIndex / entityTypes.length) * Math.PI * 2) * 20,
+                Math.sin((typeIndex / entityTypes.length) * Math.PI * 2) * 12
               ]}
             >
               {/* Hub Core */}
               <mesh>
-                <boxGeometry args={[4, 4, 4]} />
+                <boxGeometry args={[6, 6, 6]} />
                 <meshBasicMaterial
                   color={entityType.color}
                   transparent={false}
@@ -182,21 +181,8 @@ const InteractiveEntityExtractionScene: React.FC<InteractiveEntityExtractionScen
           </group>
         ))}
 
-        {/* Connection Lines between clusters */}
-        <ConnectionLines entityTypes={entityTypes} />
       </group>
 
-      {/* Scene title */}
-      <Text
-        text="EXTRACCIÓN DE ENTIDADES"
-        fontSize={3}
-        color="#4F46E5"
-        anchorX="center"
-        anchorY="middle"
-        position={[0, 25, -40]}
-      >
-        <meshBasicMaterial color="#4F46E5" toneMapped={false} />
-      </Text>
     </group>
   );
 };
@@ -220,7 +206,7 @@ const OrbitingEntities: React.FC<OrbitingEntitiesProps> = ({ entityType, count, 
     groupRef.current.children.forEach((entity, index) => {
       if (entity.type === 'Mesh') {
         const angle = (index / count) * Math.PI * 2 + time * baseSpeed;
-        const radius = 8 + (index % 3) * 2; // Órbitas variables
+        const radius = 12 + (index % 3) * 3; // Órbitas variables más grandes
         
         entity.position.x = Math.cos(angle) * radius;
         entity.position.z = Math.sin(angle) * radius;
@@ -236,7 +222,7 @@ const OrbitingEntities: React.FC<OrbitingEntitiesProps> = ({ entityType, count, 
     <group ref={groupRef}>
       {Array.from({ length: Math.min(count, 8) }, (_, i) => ( // Limitar para performance
         <mesh key={i}>
-          <boxGeometry args={[0.8, 0.8, 0.8]} />
+          <boxGeometry args={[1.2, 1.2, 1.2]} />
           <meshBasicMaterial
             color={entityType.color}
             transparent
@@ -248,61 +234,5 @@ const OrbitingEntities: React.FC<OrbitingEntitiesProps> = ({ entityType, count, 
   );
 };
 
-// Componente para líneas de conexión entre clusters
-interface ConnectionLinesProps {
-  entityTypes: typeof entityTypes;
-}
-
-const ConnectionLines: React.FC<ConnectionLinesProps> = ({ entityTypes }) => {
-  const groupRef = useRef<THREE.Group>(null);
-  
-  useFrame((state) => {
-    if (!groupRef.current) return;
-    
-    const time = state.clock.elapsedTime;
-    
-    // Animar las conexiones
-    groupRef.current.children.forEach((line, index) => {
-      if (line.material) {
-        line.material.opacity = 0.3 + Math.sin(time * 2 + index) * 0.2;
-      }
-    });
-  });
-  
-  return (
-    <group ref={groupRef}>
-      {entityTypes.map((_, fromIndex) => 
-        entityTypes.map((_, toIndex) => {
-          if (fromIndex >= toIndex) return null;
-          
-          const fromPos = new THREE.Vector3(
-            Math.cos((fromIndex / entityTypes.length) * Math.PI * 2) * 25,
-            Math.sin((fromIndex / entityTypes.length) * Math.PI * 2) * 15,
-            Math.sin((fromIndex / entityTypes.length) * Math.PI * 2) * 8
-          );
-          
-          const toPos = new THREE.Vector3(
-            Math.cos((toIndex / entityTypes.length) * Math.PI * 2) * 25,
-            Math.sin((toIndex / entityTypes.length) * Math.PI * 2) * 15,
-            Math.sin((toIndex / entityTypes.length) * Math.PI * 2) * 8
-          );
-          
-          const points = [fromPos, toPos];
-          const geometry = new THREE.BufferGeometry().setFromPoints(points);
-          
-          return (
-            <line key={`${fromIndex}-${toIndex}`} geometry={geometry}>
-              <lineBasicMaterial 
-                color="#666666" 
-                transparent 
-                opacity={0.4} 
-              />
-            </line>
-          );
-        })
-      )}
-    </group>
-  );
-};
 
 export default InteractiveEntityExtractionScene;
