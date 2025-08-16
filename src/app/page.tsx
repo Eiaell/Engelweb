@@ -180,21 +180,21 @@ export default function Home() {
           />
         </InteractionProvider>
 
-        {/* Navigation Hints */}
-        <div className="fixed bottom-8 right-8 z-20 text-right space-y-2">
-          <div className="bg-black/50 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20">
-            <p className="text-cyan-400 text-sm animate-pulse">
-              🖱️ Cursor = interactuar con datos
+        {/* Navigation Hints - Responsive */}
+        <div className="fixed bottom-4 sm:bottom-8 right-2 sm:right-8 z-20 text-right space-y-1 sm:space-y-2">
+          <div className="bg-black/50 backdrop-blur-sm px-2 sm:px-4 py-1 sm:py-2 rounded-lg border border-white/20">
+            <p className="text-cyan-400 text-xs sm:text-sm animate-pulse">
+              <span className="hidden sm:inline">🖱️ Cursor</span><span className="sm:hidden">👆 Touch</span> = interactuar
             </p>
           </div>
-          <div className="bg-black/50 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20">
-            <p className="text-yellow-400 text-sm animate-pulse">
-              ⬇️ Scroll = alejarse/zoom out
+          <div className="bg-black/50 backdrop-blur-sm px-2 sm:px-4 py-1 sm:py-2 rounded-lg border border-white/20">
+            <p className="text-yellow-400 text-xs sm:text-sm animate-pulse">
+              ⬇️ Scroll = explorar
             </p>
           </div>
-          <div className="bg-black/50 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20">
-            <p className="text-magenta-400 text-sm animate-pulse">
-              🖱️ Click + Drag = mover cámara
+          <div className="bg-black/50 backdrop-blur-sm px-2 sm:px-4 py-1 sm:py-2 rounded-lg border border-white/20">
+            <p className="text-magenta-400 text-xs sm:text-sm animate-pulse">
+              <span className="hidden sm:inline">🖱️ Drag</span><span className="sm:hidden">👆 Swipe</span> = mover cámara
             </p>
           </div>
         </div>
@@ -221,24 +221,24 @@ export default function Home() {
             return (
               <section 
                 key={key}
-                className={`h-screen flex flex-col px-8 transition-all duration-1000 ${
-                  index === 0 ? 'justify-end items-center pb-32' : 'justify-center items-center'
+                className={`h-screen flex flex-col px-4 sm:px-8 transition-all duration-1000 ${
+                  index === 0 ? 'justify-end items-center pb-16 sm:pb-32' : 'justify-center items-center'
                 }`}
                 style={{ minHeight: '100vh' }}
               >
                 {!shouldHide && (
-                  <div className={`max-w-4xl text-center space-y-8 backdrop-blur-sm bg-black/5 p-8 rounded-2xl border border-white/5 ${opacity}`}>
-                <div className="text-white text-2xl md:text-4xl font-light mb-4">
+                  <div className={`max-w-4xl text-center space-y-4 sm:space-y-8 backdrop-blur-sm bg-black/10 p-4 sm:p-8 rounded-2xl border border-white/10 ${opacity}`}>
+                <div className="text-white text-xl sm:text-2xl md:text-4xl font-light mb-2 sm:mb-4">
                   {content.title}
                 </div>
                 
                 {content.subtitle && (
-                  <div className="text-cyan-300 text-lg md:text-xl mb-4">
+                  <div className="text-cyan-300 text-base sm:text-lg md:text-xl mb-2 sm:mb-4">
                     {content.subtitle}
                   </div>
                 )}
                 
-                <div className="text-gray-300 text-base md:text-lg leading-relaxed">
+                <div className="text-gray-300 text-sm sm:text-base md:text-lg leading-relaxed">
                   {content.description}
                 </div>
                 
@@ -287,31 +287,31 @@ export default function Home() {
           </div>
         )}
         
-        {/* Scroll Indicator with Loading State */}
-        <div className="fixed bottom-8 right-8 z-20">
-          <div className="flex flex-col items-center space-y-2">
-            <div className="w-1 h-20 bg-gray-600 rounded-full overflow-hidden">
+        {/* Scroll Indicator with Loading State - Mobile Responsive */}
+        <div className="fixed bottom-20 sm:bottom-8 right-2 sm:right-8 z-20">
+          <div className="flex flex-col items-center space-y-1 sm:space-y-2">
+            <div className="w-1 h-12 sm:h-20 bg-gray-600 rounded-full overflow-hidden">
               <div 
                 className="w-full bg-red-500 transition-all duration-300 ease-out"
                 style={{ height: `${scrollState.progress * 100}%` }}
               />
             </div>
-            <span className="text-gray-400 text-sm">
+            <span className="text-gray-400 text-xs sm:text-sm">
               {scrollState.currentSection + 1} / 7
             </span>
             
             {/* Loading indicator for ongoing background loading */}
             {loadingState.progress.progress < 1 && isAppLoaded && (
-              <div className="text-xs text-gray-500 mt-2">
-                Loading: {Math.round(loadingState.progress.progress * 100)}%
+              <div className="text-xs text-gray-500 mt-1 sm:mt-2">
+                {Math.round(loadingState.progress.progress * 100)}%
               </div>
             )}
           </div>
         </div>
 
-        {/* Botón Superman para volver al inicio - aparece cuando estamos al final */}
+        {/* Botón Superman para volver al inicio - Mobile Responsive */}
         {scrollState.progress > 0.80 && (
-          <div className="fixed top-8 left-8 z-30">
+          <div className="fixed top-4 sm:top-8 left-2 sm:left-8 z-30">
             <button 
               onClick={() => {
                 // Scroll suave tipo Superman al inicio
@@ -320,9 +320,9 @@ export default function Home() {
                   behavior: 'smooth'
                 });
               }}
-              className="bg-gradient-to-r from-blue-600 to-red-600 hover:from-blue-500 hover:to-red-500 text-white font-bold py-4 px-6 rounded-full transition-all duration-300 transform hover:scale-110 shadow-lg shadow-blue-500/25 animate-pulse"
+              className="bg-gradient-to-r from-blue-600 to-red-600 hover:from-blue-500 hover:to-red-500 text-white font-bold py-2 px-3 sm:py-4 sm:px-6 rounded-full transition-all duration-300 transform hover:scale-110 shadow-lg shadow-blue-500/25 animate-pulse text-xs sm:text-base"
             >
-              🦸‍♂️ VOLVER AL INICIO
+              🦸‍♂️ <span className="hidden sm:inline">VOLVER AL INICIO</span><span className="sm:hidden">INICIO</span>
             </button>
           </div>
         )}

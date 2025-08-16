@@ -137,66 +137,76 @@ const InteractiveVectorizationScene: React.FC<InteractiveVectorizationSceneProps
           />
         </mesh>
         
-        {/* Textos del cubo - todos visibles desde el frente */}
+        {/* Textos del cubo - optimizados para móviles */}
         <Text
           text="TOKENIZE"
-          fontSize={1.5}
+          fontSize={2.2}
           color="#FFFFFF"
           anchorX="center"
           anchorY="middle"
           position={[-8, 8, 18]}
+          outlineWidth={0.05}
+          outlineColor="#000000"
         >
           <meshBasicMaterial color="#FFFFFF" toneMapped={false} />
         </Text>
         
         <Text
           text="EMBED"
-          fontSize={1.5}
+          fontSize={2.2}
           color="#FFFFFF"
           anchorX="center"
           anchorY="middle"
           position={[8, 8, 18]}
+          outlineWidth={0.05}
+          outlineColor="#000000"
         >
           <meshBasicMaterial color="#FFFFFF" toneMapped={false} />
         </Text>
         
         <Text
           text="INDEX"
-          fontSize={1.5}
+          fontSize={2.2}
           color="#FFFFFF"
           anchorX="center"
           anchorY="middle"
           position={[-8, -8, 18]}
+          outlineWidth={0.05}
+          outlineColor="#000000"
         >
           <meshBasicMaterial color="#FFFFFF" toneMapped={false} />
         </Text>
         
         <Text
           text="STORE"
-          fontSize={1.5}
+          fontSize={2.2}
           color="#FFFFFF"
           anchorX="center"
           anchorY="middle"
           position={[8, -8, 18]}
+          outlineWidth={0.05}
+          outlineColor="#000000"
         >
           <meshBasicMaterial color="#FFFFFF" toneMapped={false} />
         </Text>
         
         <Text
           text="VECTOR DB"
-          fontSize={4}
+          fontSize={5.5}
           color="#FFFFFF"
           anchorX="center"
           anchorY="middle"
           position={[0, 3, 18]}
+          outlineWidth={0.1}
+          outlineColor="#000000"
         >
           <meshBasicMaterial color="#FFFFFF" toneMapped={false} />
         </Text>
         
-        {/* Candado debajo de VECTOR DB */}
+        {/* Candado debajo de VECTOR DB - más grande para móviles */}
         <Text
           text="🔒"
-          fontSize={6}
+          fontSize={8}
           anchorX="center"
           anchorY="middle"
           position={[0, -5, 18]}
@@ -208,14 +218,17 @@ const InteractiveVectorizationScene: React.FC<InteractiveVectorizationSceneProps
         <OrbitingDocuments documentTypes={documentTypes} />
       </group>
 
-      {/* Scene title - movido lejos del cubo */}
+      {/* Scene title - optimizado para móviles */}
       <Text
         text="FRAGMENTACIÓN Y VECTORIZACIÓN"
-        fontSize={2.5}
+        fontSize={3.5}
         color="#00FFFF"
         anchorX="center"
         anchorY="middle"
         position={[0, 35, -25]}
+        outlineWidth={0.1}
+        outlineColor="#000000"
+        maxWidth={40}
       >
         <meshBasicMaterial color="#00FFFF" toneMapped={false} />
       </Text>

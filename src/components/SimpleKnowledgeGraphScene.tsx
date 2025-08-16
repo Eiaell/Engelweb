@@ -89,16 +89,17 @@ const SimpleKnowledgeGraphScene: React.FC<SimpleKnowledgeGraphSceneProps> = ({
       {/* Clusters estáticos de cuadraditos */}
       <StaticClusters />
       
-      {/* Título principal */}
+      {/* Título principal - optimizado para móviles */}
       <Text
         text="CLUSTERS DE CONOCIMIENTO"
-        fontSize={1.2}
+        fontSize={1.8}
         color="#FFFFFF"
         anchorX="center"
         anchorY="middle"
         position={[0, 8, 0]}
-        outlineWidth={0.05}
+        outlineWidth={0.08}
         outlineColor="#000000"
+        maxWidth={30}
       >
         <meshBasicMaterial 
           color="#FFFFFF" 
@@ -194,15 +195,15 @@ const FloatingCluster: React.FC<{
 
   return (
     <group ref={groupRef}>
-      {/* Etiqueta del cluster */}
+      {/* Etiqueta del cluster - más legible en móviles */}
       <Text
         text={config.label}
-        fontSize={1.5}
+        fontSize={2.2}
         color={config.color}
         anchorX="center"
         anchorY="middle"
         position={[0, 2, 0]}
-        outlineWidth={0.05}
+        outlineWidth={0.1}
         outlineColor="#000000"
       >
         <meshBasicMaterial 

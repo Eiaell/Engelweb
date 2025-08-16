@@ -70,9 +70,9 @@ const SimpleGiantInterface: React.FC<{ showSignature: boolean }> = ({ showSignat
 
   return (
     <group ref={interfaceRef}>
-      {/* Fondo simple - pantalla gigante */}
+      {/* Fondo simple - pantalla adaptativa */}
       <mesh position={[0, 0, 0]}>
-        <boxGeometry args={[15, 10, 0.5]} />
+        <boxGeometry args={[18, 12, 0.5]} />
         <meshBasicMaterial 
           color="#2D3748"
           transparent={false}
@@ -80,15 +80,15 @@ const SimpleGiantInterface: React.FC<{ showSignature: boolean }> = ({ showSignat
         />
       </mesh>
 
-      {/* Título principal */}
+      {/* Título principal - más grande para móviles */}
       <Text
         text="Bienvenido"
-        fontSize={2.5}
+        fontSize={3.5}
         color="#FFFFFF"
         anchorX="center"
         anchorY="middle"
-        position={[0, 2, 0.3]}
-        outlineWidth={0.1}
+        position={[0, 3, 0.3]}
+        outlineWidth={0.15}
         outlineColor="#000000"
       >
         <meshBasicMaterial 
@@ -98,15 +98,15 @@ const SimpleGiantInterface: React.FC<{ showSignature: boolean }> = ({ showSignat
         />
       </Text>
 
-      {/* Subtítulo simple */}
+      {/* Subtítulo simple - más legible */}
       <Text
         text="Soy tu asistente"
-        fontSize={1.5}
+        fontSize={2.2}
         color="#4FACFE"
         anchorX="center"
         anchorY="middle"
-        position={[0, 0, 0.3]}
-        outlineWidth={0.05}
+        position={[0, 0.5, 0.3]}
+        outlineWidth={0.08}
         outlineColor="#000000"
       >
         <meshBasicMaterial 
@@ -116,9 +116,9 @@ const SimpleGiantInterface: React.FC<{ showSignature: boolean }> = ({ showSignat
         />
       </Text>
 
-      {/* Barra de entrada visual */}
-      <mesh position={[0, -2, 0.3]}>
-        <boxGeometry args={[12, 1, 0.1]} />
+      {/* Barra de entrada visual - más grande */}
+      <mesh position={[0, -2.5, 0.3]}>
+        <boxGeometry args={[14, 1.5, 0.1]} />
         <meshBasicMaterial 
           color="#1A202C"
           transparent={false}
@@ -126,25 +126,25 @@ const SimpleGiantInterface: React.FC<{ showSignature: boolean }> = ({ showSignat
         />
       </mesh>
 
-      {/* Placeholder texto */}
+      {/* Placeholder texto - más visible */}
       <Text
         text="Escribe tu pregunta aquí..."
-        fontSize={0.6}
-        color="#666666"
+        fontSize={0.8}
+        color="#888888"
         anchorX="left"
         anchorY="middle"
-        position={[-5.5, -2, 0.4]}
+        position={[-6.5, -2.5, 0.4]}
       >
         <meshBasicMaterial 
-          color="#666666" 
+          color="#888888" 
           transparent={false}
           toneMapped={false}
         />
       </Text>
 
-      {/* Botón enviar */}
-      <mesh position={[5, -2, 0.4]}>
-        <boxGeometry args={[1.5, 0.8, 0.1]} />
+      {/* Botón enviar - más grande */}
+      <mesh position={[5.5, -2.5, 0.4]}>
+        <boxGeometry args={[2, 1.2, 0.1]} />
         <meshBasicMaterial 
           color="#4FACFE"
           transparent={false}
@@ -154,11 +154,11 @@ const SimpleGiantInterface: React.FC<{ showSignature: boolean }> = ({ showSignat
 
       <Text
         text="→"
-        fontSize={0.8}
+        fontSize={1.2}
         color="#FFFFFF"
         anchorX="center"
         anchorY="middle"
-        position={[5, -2, 0.5]}
+        position={[5.5, -2.5, 0.5]}
       >
         <meshBasicMaterial 
           color="#FFFFFF" 
