@@ -113,11 +113,19 @@ const WindowsFiles: React.FC<WindowsFilesProps> = ({ scrollProgress }) => {
     
     // Hide files as we scroll away (fade out immediately when scrolling starts)
     const opacity = Math.max(0, 1 - (scrollProgress * 8));
-    // Fade the group immediately when scrolling starts
-    if (scrollProgress > 0.05) {
-      groupRef.current.traverse((child) => {
+    // Only fade the main text group, not the file icons
+    const textGroup = groupRef.current.children.find(child => child.position.y === 12);
+    if (textGroup && scrollProgress > 0.05) {
+      textGroup.traverse((child) => {
         if (child.material) {
           child.material.opacity = opacity;
+        }
+      });
+    } else if (textGroup) {
+      // Restore opacity when back at top
+      textGroup.traverse((child) => {
+        if (child.material) {
+          child.material.opacity = 1;
         }
       });
     }

@@ -29,18 +29,10 @@ export const DataUniverseCanvas: React.FC<DataUniverseCanvasProps> = ({
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [interactionPoint, setInteractionPoint] = useState<THREE.Vector3 | null>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
-  const [cameraOffset, setCameraOffset] = useState({ x: 0, y: 5 }); // Start camera slightly elevated
+  const cameraOffset = { x: 0, y: 5 }; // Fixed camera position
 
-  // Handle mouse interaction and dragging for lateral movement
+  // Handle mouse interaction for chunks only (no camera dragging)
   useEffect(() => {
-    const handleMouseDown = (event: MouseEvent) => {
-      if (!canvasRef.current) return;
-      setIsDragging(true);
-      setDragStart({ x: event.clientX, y: event.clientY });
-    };
-
     const handleMouseMove = (event: MouseEvent) => {
       if (!canvasRef.current) return;
 
@@ -48,47 +40,25 @@ export const DataUniverseCanvas: React.FC<DataUniverseCanvasProps> = ({
       const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
       const y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 
-      // Handle dragging for camera movement
-      if (isDragging) {
-        const deltaX = (event.clientX - dragStart.x) * 0.1;
-        const deltaY = -(event.clientY - dragStart.y) * 0.1;
-        
-        setCameraOffset(prev => ({
-          x: prev.x + deltaX,
-          y: prev.y + deltaY
-        }));
-        
-        setDragStart({ x: event.clientX, y: event.clientY });
-      }
-
-      // Create interaction point for chunks (always active)
+      // Create interaction point for chunks (no camera movement)
       const worldPosition = new THREE.Vector3(
-        cameraOffset.x + x * 20,
-        cameraOffset.y + y * 15,
+        x * 20,
+        y * 15,
         (scrollState.progress * 6 - 3) * 60
       );
       
       setInteractionPoint(worldPosition);
     };
 
-    const handleMouseUp = () => {
-      setIsDragging(false);
-    };
-
     const handleMouseLeave = () => {
       setInteractionPoint(null);
-      setIsDragging(false);
     };
 
-    window.addEventListener('mousedown', handleMouseDown);
     window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseup', handleMouseUp);
     window.addEventListener('mouseleave', handleMouseLeave);
 
     return () => {
-      window.removeEventListener('mousedown', handleMouseDown);
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
       window.removeEventListener('mouseleave', handleMouseLeave);
     };
   }, [scrollState.progress]);

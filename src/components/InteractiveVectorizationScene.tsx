@@ -127,7 +127,7 @@ const InteractiveVectorizationScene: React.FC<InteractiveVectorizationSceneProps
         >
           <boxGeometry args={[30, 30, 30]} />
           <meshBasicMaterial
-            color="#228B22"
+            color="#FF6B35"
             transparent={false}
             opacity={1.0}
             wireframe={false}
@@ -185,9 +185,20 @@ const InteractiveVectorizationScene: React.FC<InteractiveVectorizationSceneProps
           color="#FFFFFF"
           anchorX="center"
           anchorY="middle"
-          position={[0, 0, 18]}
+          position={[0, 3, 18]}
         >
           <meshBasicMaterial color="#FFFFFF" toneMapped={false} />
+        </Text>
+        
+        {/* Candado debajo de VECTOR DB */}
+        <Text
+          text="🔒"
+          fontSize={6}
+          anchorX="center"
+          anchorY="middle"
+          position={[0, -5, 18]}
+        >
+          <meshBasicMaterial toneMapped={false} />
         </Text>
 
         {/* Documentos orbitando alrededor del cubo central */}
