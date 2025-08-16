@@ -5,6 +5,10 @@ import { useFrame } from '@react-three/fiber';
 import { Text } from '@react-three/drei';
 import WindowsFiles from './WindowsFiles';
 import GraphRAGJourney from './GraphRAGJourney';
+import InteractiveVectorizationScene from './InteractiveVectorizationScene';
+import InteractiveEntityExtractionScene from './InteractiveEntityExtractionScene';
+import InteractiveKnowledgeGraphScene from './InteractiveKnowledgeGraphScene';
+import InteractiveQueryResponseScene from './InteractiveQueryResponseScene';
 import * as THREE from 'three';
 
 interface DataChunk {
@@ -24,6 +28,12 @@ interface DataUniverseSceneProps {
   currentSection: number;
   interactionPoint?: THREE.Vector3 | null;
   cameraOffset: { x: number; y: number };
+  sceneTriggered?: {
+    vectorization: boolean;
+    entityExtraction: boolean;
+    knowledgeGraph: boolean;
+    queryResponse: boolean;
+  };
 }
 
 // All text content distributed across the universe
@@ -65,7 +75,13 @@ const colors = {
 const DataUniverseScene: React.FC<DataUniverseSceneProps> = ({ 
   scrollProgress,
   interactionPoint = null,
-  cameraOffset
+  cameraOffset,
+  sceneTriggered = {
+    vectorization: false,
+    entityExtraction: false,
+    knowledgeGraph: false,
+    queryResponse: false
+  }
 }) => {
   const groupRef = useRef<THREE.Group>(null);
   const [chunks, setChunks] = useState<DataChunk[]>([]);
@@ -146,13 +162,10 @@ const DataUniverseScene: React.FC<DataUniverseSceneProps> = ({
     const frameTime = currentTime - lastFrameTime.current;
     lastFrameTime.current = currentTime;
 
-    // Performance monitoring
-    if (frameTime > 20) {
-      setPerformanceGrade('low');
-    } else if (frameTime > 16) {
-      setPerformanceGrade('medium');
-    } else {
-      setPerformanceGrade('high');
+    // Performance monitoring - only update when grade changes
+    const newGrade = frameTime > 20 ? 'low' : frameTime > 16 ? 'medium' : 'high';
+    if (newGrade !== performanceGrade) {
+      setPerformanceGrade(newGrade);
     }
 
     const time = state.clock.elapsedTime;
@@ -177,41 +190,36 @@ const DataUniverseScene: React.FC<DataUniverseSceneProps> = ({
     const updateFrequency = performanceGrade === 'low' ? 4 : performanceGrade === 'medium' ? 2 : 1;
     if (Math.floor(time * 60) % updateFrequency !== 0) return;
 
-    setChunks(prevChunks => 
-      prevChunks.map((chunk, index) => {
-        // Skip updates for distant chunks on low performance
-        if (performanceGrade === 'low' && index % 3 !== 0) {
-          return chunk;
+    // Update chunks directly without triggering re-renders
+    chunks.forEach((chunk, index) => {
+      // Skip updates for distant chunks on low performance
+      if (performanceGrade === 'low' && index % 3 !== 0) {
+        return;
+      }
+      
+      // Floating motion
+      const floatOffset = Math.sin(time * 0.3 + chunk.position.x * 0.05) * 1.5;
+      chunk.position.y += floatOffset * 0.01;
+      
+      // Gentle orbital drift
+      const driftSpeed = 0.05 * (performanceGrade === 'low' ? 0.5 : 1);
+      chunk.position.x += Math.cos(time * driftSpeed + chunk.position.z * 0.01) * 0.005;
+      chunk.position.z += Math.sin(time * driftSpeed + chunk.position.x * 0.01) * 0.005;
+      
+      // Mouse interaction - attraction/repulsion
+      if (interactionPoint && performanceGrade !== 'low') {
+        const distance = chunk.position.distanceTo(interactionPoint);
+        if (distance < 8) {
+          const force = (8 - distance) / 8;
+          const direction = chunk.position.clone().sub(interactionPoint).normalize();
+          chunk.position.add(direction.multiplyScalar(force * 0.05));
         }
-
-        const newChunk = { ...chunk };
-        
-        // Floating motion
-        const floatOffset = Math.sin(time * 0.3 + newChunk.position.x * 0.05) * 1.5;
-        newChunk.position.y += floatOffset * 0.01;
-        
-        // Gentle orbital drift
-        const driftSpeed = 0.05 * (performanceGrade === 'low' ? 0.5 : 1);
-        newChunk.position.x += Math.cos(time * driftSpeed + newChunk.position.z * 0.01) * 0.005;
-        newChunk.position.z += Math.sin(time * driftSpeed + newChunk.position.x * 0.01) * 0.005;
-        
-        // Mouse interaction - attraction/repulsion
-        if (interactionPoint && performanceGrade !== 'low') {
-          const distance = newChunk.position.distanceTo(interactionPoint);
-          if (distance < 8) {
-            const force = (8 - distance) / 8;
-            const direction = newChunk.position.clone().sub(interactionPoint).normalize();
-            newChunk.position.add(direction.multiplyScalar(force * 0.05));
-          }
-        }
-        
-        // Pulsing opacity
-        const pulseSpeed = newChunk.type === 'insight' ? 1.5 : 0.8;
-        newChunk.opacity = 0.5 + Math.sin(time * pulseSpeed + newChunk.position.x * 0.1) * 0.4;
-
-        return newChunk;
-      })
-    );
+      }
+      
+      // Pulsing opacity
+      const pulseSpeed = chunk.type === 'insight' ? 1.5 : 0.8;
+      chunk.opacity = 0.5 + Math.sin(time * pulseSpeed + chunk.position.x * 0.1) * 0.4;
+    });
   });
 
   return (
@@ -221,6 +229,21 @@ const DataUniverseScene: React.FC<DataUniverseSceneProps> = ({
       
       {/* Windows Files at the beginning */}
       <WindowsFiles scrollProgress={scrollProgress} />
+      
+      {/* Vectorization Scene - Second section */}
+      <InteractiveVectorizationScene 
+        scrollProgress={scrollProgress} 
+        sceneTriggered={sceneTriggered.vectorization}
+      />
+      
+      {/* Entity Extraction Scene - Third section */}
+      <InteractiveEntityExtractionScene scrollProgress={scrollProgress} />
+      
+      {/* Knowledge Graph Scene - Fourth section */}
+      <InteractiveKnowledgeGraphScene scrollProgress={scrollProgress} />
+      
+      {/* Query Response Scene - Fifth section */}
+      <InteractiveQueryResponseScene scrollProgress={scrollProgress} />
       
       {/* GraphRAG Journey Path */}
       <GraphRAGJourney scrollProgress={scrollProgress} />

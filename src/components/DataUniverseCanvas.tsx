@@ -9,11 +9,23 @@ import * as THREE from 'three';
 interface DataUniverseCanvasProps {
   scrollState: ScrollState;
   className?: string;
+  sceneTriggered?: {
+    vectorization: boolean;
+    entityExtraction: boolean;
+    knowledgeGraph: boolean;
+    queryResponse: boolean;
+  };
 }
 
 export const DataUniverseCanvas: React.FC<DataUniverseCanvasProps> = ({ 
   scrollState, 
-  className = '' 
+  className = '',
+  sceneTriggered = {
+    vectorization: false,
+    entityExtraction: false,
+    knowledgeGraph: false,
+    queryResponse: false
+  }
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [interactionPoint, setInteractionPoint] = useState<THREE.Vector3 | null>(null);
@@ -79,7 +91,7 @@ export const DataUniverseCanvas: React.FC<DataUniverseCanvasProps> = ({
       window.removeEventListener('mouseup', handleMouseUp);
       window.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, [scrollState.progress, isDragging, dragStart, cameraOffset]);
+  }, [scrollState.progress]);
 
   return (
     <div className={`fixed inset-0 -z-10 ${className}`}>
@@ -111,6 +123,7 @@ export const DataUniverseCanvas: React.FC<DataUniverseCanvasProps> = ({
             currentSection={scrollState.currentSection}
             interactionPoint={interactionPoint}
             cameraOffset={cameraOffset}
+            sceneTriggered={sceneTriggered}
           />
         </Suspense>
       </Canvas>

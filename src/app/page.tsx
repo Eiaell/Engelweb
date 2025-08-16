@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import * as THREE from 'three';
 import { DataUniverseCanvas } from '@/components/DataUniverseCanvas';
+import { InteractionProvider } from '@/contexts/InteractionContext';
 import { PremiumLoader } from '@/components/PremiumLoader';
 import { LoadingTransition } from '@/components/LoadingTransition';
 import { useScrollControl } from '@/hooks/useScrollControl';
@@ -18,45 +19,41 @@ const sectionContent = {
   foundation: {
     title: "Ingesta de datos",
     subtitle: "Transformación inteligente de información",
-    description: "Procesamos PDF, Word y Excel para crear memoria organizacional estructurada."
+    description: "Proceso PDF, Word y Excel para crear memoria organizacional estructurada."
   },
   
   human: {
-    title: "Enfoque humano y organizacional",
-    subtitle: "Sistemas que potencian el talento humano",
-    description: "La IA amplifica la experiencia y conocimiento de tu equipo."
+    title: "Fragmentación y vectorización",
+    subtitle: "De texto a memoria semántica",
+    description: "Convierto contenido en text chunks optimizados y los almacenamos en vector database para búsquedas contextuales precisas."
   },
   strategy: {
-    title: "Implementación estratégica",
-    subtitle: "Tecnología integrada a la cultura corporativa",
-    description: "El éxito no está solo en la IA, sino en su adopción organizacional."
+    title: "Extracción de entidades",
+    subtitle: "Identificación de elementos clave",
+    description: "Personas, procesos, relaciones y conceptos estructurados en memoria corporativa activa."
   },
   technical: {
-    title: "De búsquedas básicas",
-    subtitle: "A sistemas expertos trazables",
-    description: "En Núcleo Ai, tranfromamos datos fragmentados en insights accionables y confiables."
+    title: "Grafo de conocimiento",
+    subtitle: "Conexiones que generan inteligencia y valor",
+    description: "Knowledge graph navegable que mapea información, relaciones y contexto."
   },
   graphrag: {
-    title: "Comprensión profunda",
-    subtitle: "Conexiones que generan valor",
-    description: "RAG recupera información; GraphRAG construye comprensión contextual."
-  },
-  cta: {
-    title: "Transforma tu gestión del conocimiento",
-    subtitle: "De información dispersa a decisiones informadas",
-    description: "30% en optimizacion de tu organización en RRHH."
-  },
-  vision: {
-    title: "De la moda a la misión",
-    subtitle: "IA con fundamentos sólidos",
-    description: "Construyo arquitecturas de conocimiento que perduran más allá del ciclo tecnológico"
+    title: "Consulta y respuesta del Usuario",
+    subtitle: "Resultados trazables y explicables",
+    description: "Junto a mi equipo combinamos memoria vectorial y grafos para entregar respuestas precisas y auditables."
   }
 };
 
 export default function Home() {
   const [isAppLoaded, setIsAppLoaded] = useState(false);
   const [showLoadingTransition, setShowLoadingTransition] = useState(false);
-  const { scrollState } = useScrollControl(7);
+  const [sceneTriggered, setSceneTriggered] = useState({
+    vectorization: false,
+    entityExtraction: false,
+    knowledgeGraph: false,
+    queryResponse: false
+  });
+  const { scrollState } = useScrollControl(5); // 5 secciones del proceso GraphRAG
   const { 
     loadingState, 
     progressiveLoader, 
@@ -116,6 +113,27 @@ export default function Home() {
     }
   }, [loadingState.error, clearError]);
 
+  // Detectar cuando los títulos cruzan la línea media de la pantalla
+  useEffect(() => {
+    // Definir los rangos donde cada título empieza su animación desde abajo
+    const titleAnimationRanges = [
+      { section: 'vectorization', start: 0.15, trigger: 0.20 },  // Fragmentación - trigger cuando texto está en centro
+      { section: 'entityExtraction', start: 0.35, trigger: 0.38 }, // Extracción  
+      { section: 'knowledgeGraph', start: 0.55, trigger: 0.58 },   // Grafo
+      { section: 'queryResponse', start: 0.75, trigger: 0.78 }    // Consulta
+    ];
+
+    titleAnimationRanges.forEach(({ section, start, trigger }) => {
+      // Trigger se activa cuando el título ha recorrido suficiente para cruzar línea media
+      if (scrollState.progress >= trigger && !sceneTriggered[section as keyof typeof sceneTriggered]) {
+        setSceneTriggered(prev => ({
+          ...prev,
+          [section]: true
+        }));
+      }
+    });
+  }, [scrollState.progress, sceneTriggered]);
+
   // Development testing (only in dev mode)
   useEffect(() => {
     if (process.env.NODE_ENV === 'development' && isAppLoaded && !loadingState.isLoading) {
@@ -152,9 +170,15 @@ export default function Home() {
         !isAppLoaded ? 'opacity-0' : 'opacity-100'
       }`}>
         {/* Data Universe Background */}
-        <DataUniverseCanvas 
-          scrollState={scrollState}
-        />
+        <InteractionProvider 
+          enableAnalytics={true}
+          enableDebugMode={process.env.NODE_ENV === 'development'}
+        >
+          <DataUniverseCanvas 
+            scrollState={scrollState}
+            sceneTriggered={sceneTriggered}
+          />
+        </InteractionProvider>
 
         {/* Navigation Hints */}
         <div className="fixed bottom-8 right-8 z-20 text-right space-y-2">
@@ -178,12 +202,21 @@ export default function Home() {
         {/* Minimal Content Overlay */}
         <div className="relative z-10">
           {Object.entries(sectionContent).map(([key, content], index) => {
-            const currentSection = Math.floor(scrollState.progress * 7);
-            const isCurrentSection = currentSection === index;
-            const opacity = isCurrentSection ? 'opacity-90' : 'opacity-30';
+            // Define text timing ranges - appear BEFORE animations
+            const textRanges = [
+              { start: 0.0, end: 0.20 },   // Ingesta de datos (0-20%)
+              { start: 0.15, end: 0.40 },  // Fragmentación (15-40%) - extended to match 3D scene duration
+              { start: 0.35, end: 0.45 },  // Extracción (35-45%)
+              { start: 0.55, end: 0.65 },  // Grafo (55-65%)
+              { start: 0.75, end: 0.85 }   // Consulta (75-85%)
+            ];
             
-            // No hiding for first section - show immediately with files
-            const shouldHide = false;
+            const range = textRanges[index] || { start: 0, end: 0.2 };
+            const isInTextRange = scrollState.progress >= range.start && scrollState.progress <= range.end;
+            const opacity = 'opacity-90'; // SIEMPRE VISIBLE - sin fade
+            
+            // Los textos siempre son visibles cuando están en su sección
+            const shouldHide = !isInTextRange;
             
             return (
               <section 
@@ -194,38 +227,20 @@ export default function Home() {
                 style={{ minHeight: '100vh' }}
               >
                 {!shouldHide && (
-                  <div className={`max-w-4xl text-center space-y-8 backdrop-blur-sm bg-black/5 p-8 rounded-2xl border border-white/5 transition-all duration-1000 ${opacity}`}>
-                <TextReveal
-                  className="text-white text-2xl md:text-4xl font-light mb-4"
-                  delay={0.3}
-                  duration={1.2}
-                  variant="fade"
-                  triggerStart="top 80%"
-                >
+                  <div className={`max-w-4xl text-center space-y-8 backdrop-blur-sm bg-black/5 p-8 rounded-2xl border border-white/5 ${opacity}`}>
+                <div className="text-white text-2xl md:text-4xl font-light mb-4">
                   {content.title}
-                </TextReveal>
+                </div>
                 
                 {content.subtitle && (
-                  <TextReveal
-                    className="text-cyan-300 text-lg md:text-xl mb-4"
-                    delay={0.6}
-                    duration={1.0}
-                    variant="fade"
-                    triggerStart="top 75%"
-                  >
+                  <div className="text-cyan-300 text-lg md:text-xl mb-4">
                     {content.subtitle}
-                  </TextReveal>
+                  </div>
                 )}
                 
-                <TextReveal
-                  className="text-gray-300 text-base md:text-lg leading-relaxed"
-                  delay={1.0}
-                  duration={1.2}
-                  variant="fade"
-                  triggerStart="top 70%"
-                >
+                <div className="text-gray-300 text-base md:text-lg leading-relaxed">
                   {content.description}
-                </TextReveal>
+                </div>
                 
                 {key === 'cta' && (
                   <div className="mt-8">
@@ -282,7 +297,7 @@ export default function Home() {
               />
             </div>
             <span className="text-gray-400 text-sm">
-              {scrollState.currentSection + 1} / 6
+              {scrollState.currentSection + 1} / 5
             </span>
             
             {/* Loading indicator for ongoing background loading */}
