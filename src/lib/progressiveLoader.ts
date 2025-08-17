@@ -8,8 +8,8 @@ export interface LoadableAsset {
   priority: 'critical' | 'high' | 'medium' | 'low';
   estimatedSize: number; // in MB
   dependencies: string[];
-  loader: () => Promise<any>;
-  onLoaded?: (asset: any) => void;
+  loader: () => Promise<unknown>;
+  onLoaded?: (asset: unknown) => void;
   onError?: (error: Error) => void;
 }
 
@@ -33,8 +33,8 @@ export class ProgressiveLoader {
   private memoryManager: MemoryManager;
   private performanceManager: PerformanceManager;
   private loadQueue: LoadableAsset[] = [];
-  private loadedAssets: Map<string, any> = new Map();
-  private loadingPromises: Map<string, Promise<any>> = new Map();
+  private loadedAssets: Map<string, unknown> = new Map();
+  private loadingPromises: Map<string, Promise<unknown>> = new Map();
   private sceneConfigs: Map<string, ScenePreloadConfig> = new Map();
   private currentPosition = new THREE.Vector3();
   private loadingProgress: LoadingProgress = {
@@ -79,7 +79,7 @@ export class ProgressiveLoader {
       const endTime = performance.now();
       const duration = (endTime - startTime) / 1000; // seconds
       this.bandwidthEstimate = Math.max(1, 0.001 / duration); // MB/s (very rough estimate)
-    } catch (error) {
+    } catch (_error) {
       console.warn('Bandwidth estimation failed, using default');
     }
   }
@@ -208,7 +208,7 @@ export class ProgressiveLoader {
     this.memoryManager.triggerGarbageCollection();
   }
 
-  private disposeAsset(asset: any, type: string) {
+  private disposeAsset(asset: unknown, type: string) {
     switch (type) {
       case 'geometry':
         if (asset instanceof THREE.BufferGeometry) {
@@ -314,7 +314,7 @@ export class ProgressiveLoader {
     this.bandwidthEstimate = this.loadingSpeeds.reduce((a, b) => a + b, 0) / this.loadingSpeeds.length;
   }
 
-  private optimizeAsset(asset: any, type: string): any {
+  private optimizeAsset(asset: unknown, type: string): unknown {
     const qualityLevel = this.performanceManager.getCurrentQuality();
     
     switch (type) {
@@ -352,7 +352,8 @@ export class ProgressiveLoader {
   }
 
   private optimizeTexture(texture: THREE.Texture, quality: QualityLevel): THREE.Texture {
-    const qualitySettings = this.performanceManager.getQualitySettings(quality);
+    // Quality settings optimization
+    this.performanceManager.getQualitySettings(quality);
     
     // Apply quality-based filtering
     const filterModes = {
@@ -419,7 +420,7 @@ export class ProgressiveLoader {
   }
 
   // Public API
-  async loadAssetById(assetId: string): Promise<any> {
+  async loadAssetById(assetId: string): Promise<unknown> {
     if (this.loadedAssets.has(assetId)) {
       return this.loadedAssets.get(assetId);
     }

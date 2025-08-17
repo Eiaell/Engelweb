@@ -1,6 +1,6 @@
 'use client';
 
-import type { Vector3 } from 'three';
+// import type { Vector3 } from 'three';
 
 /**
  * Advanced Gesture Recognition Types
