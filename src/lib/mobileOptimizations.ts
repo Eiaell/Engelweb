@@ -34,7 +34,7 @@ export class MobileOptimizer {
    * Get optimized scene settings based on mobile profile
    */
   getSceneSettings(profile: MobileProfile, optimizations: MobileOptimizations): MobileSceneSettings {
-    const { isMobile, isTablet, performance } = profile;
+    const { isMobile, performance } = profile;
     const { maxPolygons, particleCount, textureResolution, shadowQuality, enableParticles } = optimizations;
 
     // Base settings following CLAUDE.md constraints
@@ -301,7 +301,7 @@ export class MobileOptimizer {
   /**
    * Optimize texture for mobile rendering
    */
-  private optimizeTexture(texture: THREE.Texture, settings: MobileSceneSettings): THREE.Texture {
+  private optimizeTexture(texture: THREE.Texture, _settings: MobileSceneSettings): THREE.Texture {
     // Clone texture to avoid modifying original
     const optimized = texture.clone();
     

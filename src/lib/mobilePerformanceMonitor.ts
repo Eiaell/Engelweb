@@ -1,6 +1,6 @@
 'use client';
 
-import { mobileDetection, MobileProfile, MobileOptimizations } from './mobileDetection';
+import { mobileDetection, MobileProfile } from './mobileDetection';
 import { PerformanceManager } from './performance';
 
 /**
@@ -268,7 +268,7 @@ export class MobilePerformanceMonitor {
     
     // Network information (if available)
     if ('connection' in navigator) {
-      const connection = (navigator as any).connection;
+      const connection = (navigator as { connection: unknown }).connection;
       connection.addEventListener('change', this.handleNetworkChange);
       this.updateNetworkMetrics(connection);
     }
@@ -312,7 +312,7 @@ export class MobilePerformanceMonitor {
   };
 
   private handleBatteryChange = (event: Event) => {
-    const battery = event.target as any;
+    const battery = event.target as unknown;
     this.updateBatteryMetrics(battery);
     
     // Adapt quality based on battery level
@@ -324,7 +324,7 @@ export class MobilePerformanceMonitor {
   };
 
   private handleNetworkChange = (event: Event) => {
-    const connection = event.target as any;
+    const connection = event.target as unknown;
     this.updateNetworkMetrics(connection);
   };
 
@@ -455,12 +455,12 @@ export class MobilePerformanceMonitor {
       const qualities = ['none', 'low', 'medium'];
       const currentIndex = qualities.indexOf(newSettings.shadowQuality);
       if (currentIndex > 0) {
-        newSettings.shadowQuality = qualities[currentIndex - 1] as any;
+        newSettings.shadowQuality = qualities[currentIndex - 1] as 'none' | 'low' | 'medium' | 'high';
       }
     }
     
     if (newSettings.textureQuality > 128) {
-      newSettings.textureQuality = Math.max(128, newSettings.textureQuality / 2) as any;
+      newSettings.textureQuality = Math.max(128, newSettings.textureQuality / 2) as number;
     }
     
     newSettings.lodBias = Math.min(3.0, newSettings.lodBias + 0.2);
@@ -485,12 +485,12 @@ export class MobilePerformanceMonitor {
       const qualities = ['none', 'low', 'medium'];
       const currentIndex = qualities.indexOf(newSettings.shadowQuality);
       if (currentIndex < qualities.length - 1) {
-        newSettings.shadowQuality = qualities[currentIndex + 1] as any;
+        newSettings.shadowQuality = qualities[currentIndex + 1] as 'none' | 'low' | 'medium' | 'high';
       }
     }
     
     if (newSettings.textureQuality < 512) {
-      newSettings.textureQuality = Math.min(512, newSettings.textureQuality * 2) as any;
+      newSettings.textureQuality = Math.min(512, newSettings.textureQuality * 2) as number;
     }
     
     newSettings.lodBias = Math.max(1.0, newSettings.lodBias - 0.1);

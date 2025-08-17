@@ -171,7 +171,7 @@ class MobileDetectionManager {
     };
   }
 
-  private profilePerformance(isMobile: boolean, isTablet: boolean, capabilities: unknown) {
+  private profilePerformance(isMobile: boolean, isTablet: boolean, _capabilities: unknown) {
     let tier: 'low' | 'medium' | 'high' = 'medium';
     let estimatedGPU: 'integrated' | 'discrete' = 'integrated';
     let memoryLimit = 256; // MB
@@ -227,7 +227,7 @@ class MobileDetectionManager {
 
   private profileMobilePerformance(): 'low' | 'medium' | 'high' {
     const userAgent = navigator.userAgent;
-    const platform = navigator.platform;
+    // const platform = navigator.platform;
     
     // iOS device detection - generally higher performance
     if (/iPhone|iPad|iPod/i.test(userAgent)) {
@@ -310,7 +310,7 @@ class MobileDetectionManager {
       const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
       if (debugInfo) {
         const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL).toLowerCase();
-        const vendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL).toLowerCase();
+        // const vendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL).toLowerCase();
         
         // Enhanced GPU detection patterns
         const discretePatterns = [
@@ -398,7 +398,7 @@ class MobileDetectionManager {
   }
 
   private getDeviceMemory(): { available: boolean; amount: number } {
-    const memory = (navigator as any).deviceMemory;
+    const memory = (navigator as { deviceMemory?: number }).deviceMemory;
     if (typeof memory === 'number') {
       return { available: true, amount: memory };
     }
