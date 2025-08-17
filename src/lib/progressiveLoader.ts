@@ -79,7 +79,7 @@ export class ProgressiveLoader {
       const endTime = performance.now();
       const duration = (endTime - startTime) / 1000; // seconds
       this.bandwidthEstimate = Math.max(1, 0.001 / duration); // MB/s (very rough estimate)
-    } catch (_error) {
+    } catch {
       console.warn('Bandwidth estimation failed, using default');
     }
   }

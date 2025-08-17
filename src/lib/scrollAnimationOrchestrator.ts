@@ -286,7 +286,7 @@ export class ScrollAnimationOrchestrator {
     }
   }
 
-  private handleSectionChange(newSection: number, _direction: 'up' | 'down'): void {
+  private handleSectionChange(newSection: number, direction: 'up' | 'down'): void {
     if (this.isAnimating) return;
 
     this.isAnimating = true;

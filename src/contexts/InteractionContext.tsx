@@ -24,7 +24,7 @@ interface InteractionContextValue {
   
   // Analytics and performance
   analytics: InteractionAnalytics | null;
-  performanceMetrics: any;
+  performanceMetrics: unknown;
   
   // Global methods
   setGlobalMode: (mode: InteractionState['mode']) => void;
@@ -49,7 +49,7 @@ interface InteractionContextValue {
   // Event system
   subscribe: (type: InteractionType, handler: InteractionHandler) => void;
   unsubscribe: (type: InteractionType, handler: InteractionHandler) => void;
-  broadcast: (type: InteractionType, data: any) => void;
+  broadcast: (type: InteractionType, data: unknown) => void;
   
   // Debugging and monitoring
   enableDebugMode: (enabled: boolean) => void;
@@ -65,7 +65,7 @@ interface InteractionProviderProps {
   enableAnalytics?: boolean;
   enableDebugMode?: boolean;
   onGlobalStateChange?: (state: InteractionState) => void;
-  onPerformanceIssue?: (metrics: any) => void;
+  onPerformanceIssue?: (metrics: unknown) => void;
 }
 
 export const InteractionProvider: React.FC<InteractionProviderProps> = ({
@@ -315,7 +315,7 @@ export const InteractionProvider: React.FC<InteractionProviderProps> = ({
     }
   };
 
-  const broadcast = (type: InteractionType, data: any) => {
+  const broadcast = (type: InteractionType, data: unknown) => {
     if (interactionManager) {
       // Create a broadcast event
       const event = {

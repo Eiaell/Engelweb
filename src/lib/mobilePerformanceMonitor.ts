@@ -259,7 +259,7 @@ export class MobilePerformanceMonitor {
     
     // Battery API (if available)
     if ('getBattery' in navigator) {
-      (navigator as any).getBattery().then((battery: any) => {
+      (navigator as { getBattery: () => Promise<unknown> }).getBattery().then((battery: unknown) => {
         battery.addEventListener('levelchange', this.handleBatteryChange);
         battery.addEventListener('chargingchange', this.handleBatteryChange);
         this.updateBatteryMetrics(battery);
@@ -328,15 +328,15 @@ export class MobilePerformanceMonitor {
     this.updateNetworkMetrics(connection);
   };
 
-  private updateBatteryMetrics(battery: any) {
+  private updateBatteryMetrics(battery: unknown) {
     this.currentMetrics.batteryLevel = battery.level;
     this.currentMetrics.isCharging = battery.charging;
   }
 
-  private updateNetworkMetrics(connection: any) {
+  private updateNetworkMetrics(connection: unknown) {
     // Map connection effective type to our categories
     const effectiveType = connection.effectiveType;
-    const speedMap: { [key: string]: any } = {
+    const speedMap: { [key: string]: number } = {
       'slow-2g': 'slow-2g',
       '2g': '2g',
       '3g': '3g',

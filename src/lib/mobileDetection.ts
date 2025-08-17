@@ -171,7 +171,7 @@ class MobileDetectionManager {
     };
   }
 
-  private profilePerformance(isMobile: boolean, isTablet: boolean, capabilities: any) {
+  private profilePerformance(isMobile: boolean, isTablet: boolean, capabilities: unknown) {
     let tier: 'low' | 'medium' | 'high' = 'medium';
     let estimatedGPU: 'integrated' | 'discrete' = 'integrated';
     let memoryLimit = 256; // MB

@@ -85,7 +85,7 @@ export class PerformanceManager {
       const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
       if (debugInfo) {
         const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
-        const _vendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL);
+        // const _vendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL);
         
         // Detect integrated GPU
         isIntegratedGPU = /intel|uhd|iris|vega|amd.*graphics/i.test(renderer);

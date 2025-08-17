@@ -121,7 +121,7 @@ const InteractiveKnowledgeGraphScene: React.FC<InteractiveKnowledgeGraphScenePro
 
   // Generate knowledge graph nodes with enhanced metadata
   const graphNodes = useMemo(() => {
-    const nodes: any[] = [];
+    const nodes: { id: number; type: string; position: [number, number, number]; color: string; size: number; metadata: Record<string, unknown> }[] = [];
     let nodeId = 0;
     
     nodeTypeDefinitions.forEach((nodeType, typeIndex) => {
@@ -208,7 +208,7 @@ const InteractiveKnowledgeGraphScene: React.FC<InteractiveKnowledgeGraphScenePro
 
   // Generate connection lines with relationship metadata
   const connections = useMemo(() => {
-    const lines: any[] = [];
+    const lines: { from: [number, number, number]; to: [number, number, number]; strength: number; color: string }[] = [];
     graphNodes.forEach((node, index) => {
       node.connections.forEach((connectionIndex: number) => {
         if (connectionIndex > index) { // Avoid duplicate lines
@@ -456,7 +456,7 @@ const InteractiveKnowledgeGraphScene: React.FC<InteractiveKnowledgeGraphScenePro
     setFilterState(prev => ({ ...prev, ...newFilter }));
   }, []);
 
-  const shouldShowNode = useCallback((node: any) => {
+  const shouldShowNode = useCallback((node: { type: string; metadata: Record<string, unknown> }) => {
     if (filterState.nodeTypes.size > 0 && !filterState.nodeTypes.has(node.type)) {
       return false;
     }

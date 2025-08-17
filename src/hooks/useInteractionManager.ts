@@ -36,8 +36,8 @@ interface InteractionManagerHook {
   redo: () => boolean;
   on: (type: InteractionType, handler: InteractionHandler) => void;
   off: (type: InteractionType, handler: InteractionHandler) => void;
-  updateObjectState: (objectId: string, newState: any) => void;
-  getPerformanceMetrics: () => any;
+  updateObjectState: (objectId: string, newState: unknown) => void;
+  getPerformanceMetrics: () => unknown;
 }
 
 export const useInteractionManager = (
@@ -216,7 +216,7 @@ export const useInteractionManager = (
     }
   }, []);
 
-  const updateObjectState = useCallback((objectId: string, newState: any) => {
+  const updateObjectState = useCallback((objectId: string, newState: unknown) => {
     if (interactionManagerRef.current) {
       interactionManagerRef.current.updateObjectState(objectId, newState);
     }
@@ -254,7 +254,7 @@ export const useInteractableObject = (
   id: string,
   type: string,
   metadata: Record<string, any> = {},
-  capabilities: any[] = ['selectable', 'inspectable'],
+  capabilities: string[] = ['selectable', 'inspectable'],
   accessibility: {
     label: string;
     description: string;
@@ -315,7 +315,7 @@ export const useInteractionPattern = (
   useEffect(() => {
     if (!objectId) return;
 
-    const handler = (event: any) => {
+    const handler = (event: unknown) => {
       if (event.target?.interactionData?.id === objectId) {
         setPatternState({
           type: event.type,

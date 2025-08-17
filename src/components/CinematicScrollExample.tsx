@@ -410,10 +410,10 @@ const Navigation: React.FC<{
 
 // Debug panel for development
 const DebugPanel: React.FC<{
-  scrollState: any;
-  performanceMetrics: any;
+  scrollState: unknown;
+  performanceMetrics: unknown;
   currentQuality: string;
-  debugInfo: any;
+  debugInfo: unknown;
 }> = ({ scrollState, performanceMetrics, currentQuality, debugInfo }) => {
   return (
     <div className="fixed bottom-4 left-4 z-50 bg-black/80 text-white p-4 rounded-lg text-xs font-mono max-w-md">

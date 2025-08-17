@@ -46,7 +46,7 @@ const EntityExtractionScene: React.FC<EntityExtractionSceneProps> = ({ scrollPro
 
   // Generate entities with positions and animations
   const entities = useMemo(() => {
-    const allEntities: any[] = [];
+    const allEntities: { type: string; position: [number, number, number]; size: number; id: number }[] = [];
     
     entityTypes.forEach((type, typeIndex) => {
       for (let i = 0; i < type.count; i++) {

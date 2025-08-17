@@ -363,7 +363,7 @@ export class CleanupManager {
   /**
    * GSAP animation cleanup helper
    */
-  cleanupGSAPAnimations(targets: any[]): void {
+  cleanupGSAPAnimations(targets: unknown[]): void {
     targets.forEach(target => {
       if (target && typeof target.kill === 'function') {
         target.kill();

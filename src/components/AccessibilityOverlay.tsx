@@ -370,7 +370,7 @@ export const AccessibilityOverlay: React.FC<AccessibilityOverlayProps> = ({
   useEffect(() => {
     if (!manager || !enabled) return;
     
-    const handleStateChange = (event: any) => {
+    const handleStateChange = (event: unknown) => {
       const { objectId, newState, oldState } = event;
       const object = globalState?.objects.get(objectId);
       

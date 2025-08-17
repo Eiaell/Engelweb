@@ -35,7 +35,7 @@ export interface StateSnapshot {
     visible: boolean;
     opacity: number;
     state: string;
-    data: any;
+    data: unknown;
   }>;
   sceneState: {
     camera: {
@@ -44,8 +44,8 @@ export interface StateSnapshot {
       fov: number;
     };
     selection: string[];
-    filters: any[];
-    settings: Record<string, any>;
+    filters: unknown[];
+    settings: Record<string, unknown>;
   };
   metadata: {
     commandId: string;
@@ -561,14 +561,14 @@ export class UndoRedoSystem extends EventEmitter {
     this.currentIndex = Math.min(this.currentIndex, this.commands.length - 1);
   }
 
-  private deepClone(obj: any): any {
+  private deepClone(obj: unknown): unknown {
     if (obj === null || typeof obj !== 'object') return obj;
     if (obj instanceof Date) return new Date(obj.getTime());
     if (obj instanceof Array) return obj.map(item => this.deepClone(item));
     if (obj instanceof THREE.Vector3) return obj.clone();
     if (obj instanceof THREE.Euler) return obj.clone();
     if (typeof obj === 'object') {
-      const cloned: any = {};
+      const cloned: Record<string, unknown> = {};
       for (const key in obj) {
         if (obj.hasOwnProperty(key)) {
           cloned[key] = this.deepClone(obj[key]);

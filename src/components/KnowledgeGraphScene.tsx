@@ -14,7 +14,7 @@ const KnowledgeGraphScene: React.FC<KnowledgeGraphSceneProps> = ({ scrollProgres
 
   // Knowledge graph nodes - representing key concepts, entities, and relationships
   const graphNodes = useMemo(() => {
-    const nodes: any[] = [];
+    const nodes: { id: number; type: string; position: [number, number, number]; color: string; size: number }[] = [];
     const nodeTypes = [
       { type: 'CORE', color: '#FF6B6B', size: 2, count: 3 },      // Core concepts
       { type: 'ENTITY', color: '#4ECDC4', size: 1.5, count: 8 },   // Entities  
@@ -68,7 +68,7 @@ const KnowledgeGraphScene: React.FC<KnowledgeGraphSceneProps> = ({ scrollProgres
 
   // Generate connection lines between nodes
   const connections = useMemo(() => {
-    const lines: any[] = [];
+    const lines: { from: [number, number, number]; to: [number, number, number]; opacity: number }[] = [];
     graphNodes.forEach((node, index) => {
       node.connections.forEach((connectionIndex: number) => {
         if (connectionIndex > index) { // Avoid duplicate lines

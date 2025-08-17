@@ -103,7 +103,7 @@ export const UndoRedoControls: React.FC<UndoRedoControlsProps> = ({
   }, [manager, globalState, snapshotsEnabled, autoGroup]);
 
   // Convert interaction command to undo/redo command
-  const convertToUndoRedoCommand = useCallback((command: any): ExecutableCommand => {
+  const convertToUndoRedoCommand = useCallback((command: unknown): ExecutableCommand => {
     const objectRegistry = new Map();
     if (globalState) {
       globalState.objects.forEach((object, id) => {

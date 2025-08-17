@@ -138,7 +138,7 @@ export const useLoadingScroll = (
   }, [lenisInstance, scrollLocked, toggleScrollLock, transitionDuration]);
 
   // Manual scroll control
-  const manualScrollTo = useCallback((target: number | string | Element, options?: any) => {
+  const manualScrollTo = useCallback((target: number | string | Element, options?: unknown) => {
     if (scrollLocked) {
       console.warn('Scroll is locked - cannot scroll to target');
       return;

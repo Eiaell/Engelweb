@@ -231,7 +231,7 @@ export class OptimizationManager {
   private static disposeMaterial(material: THREE.Material): void {
     // Dispose textures
     Object.keys(material).forEach(key => {
-      const value = (material as any)[key];
+      const value = (material as Record<string, unknown>)[key];
       if (value && value.isTexture) {
         value.dispose();
       }
