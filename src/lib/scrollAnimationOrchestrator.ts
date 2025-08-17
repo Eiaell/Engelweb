@@ -115,12 +115,9 @@ export class ScrollAnimationOrchestrator {
   }
 
   private addCameraAnimations(timeline: gsap.core.Timeline, keyframes: CameraKeyframe[]): void {
-    keyframes.forEach((keyframe, index) => {
-      const cameraTargets = {
-        position: keyframe.position,
-        rotation: keyframe.rotation,
-        fov: keyframe.fov
-      };
+    keyframes.forEach((keyframe) => {
+      // Camera animation logic can be implemented here
+      console.log('Camera keyframe:', keyframe);
 
       timeline.to({}, {
         duration: keyframe.duration,
@@ -173,7 +170,8 @@ export class ScrollAnimationOrchestrator {
 
   private addCameraShake(intensity: number, duration: number): void {
     const shakeTimeline = gsap.timeline();
-    const shakeAmount = intensity * (this.performanceMode.lodLevel === 0 ? 1 : 0.5);
+    // Shake intensity based on performance mode
+    console.log('Shake intensity:', intensity * (this.performanceMode.lodLevel === 0 ? 1 : 0.5));
     
     shakeTimeline.to({}, {
       duration: duration,
@@ -203,7 +201,7 @@ export class ScrollAnimationOrchestrator {
         const metrics: PerformanceMetrics = {
           fps: this.currentFPS,
           frameTime: now - this.lastFrameTime,
-          memoryUsage: (performance as any).memory?.usedJSHeapSize || 0,
+          memoryUsage: ('memory' in performance ? (performance as { memory: { usedJSHeapSize: number } }).memory?.usedJSHeapSize : 0) || 0,
           animationComplexity: this.getAnimationComplexity(),
           shouldOptimize: this.currentFPS < 45
         };
@@ -288,7 +286,7 @@ export class ScrollAnimationOrchestrator {
     }
   }
 
-  private handleSectionChange(newSection: number, direction: 'up' | 'down'): void {
+  private handleSectionChange(newSection: number, _direction: 'up' | 'down'): void {
     if (this.isAnimating) return;
 
     this.isAnimating = true;

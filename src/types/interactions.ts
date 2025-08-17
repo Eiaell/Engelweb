@@ -4,7 +4,7 @@ import * as THREE from 'three';
 export interface InteractionEvent {
   type: InteractionType;
   target: THREE.Object3D | null;
-  data: any;
+  data: unknown;
   timestamp: number;
   position: THREE.Vector3;
   multiSelect?: boolean;
@@ -47,7 +47,7 @@ export interface InteractableObject extends THREE.Object3D {
   interactionData: {
     id: string;
     type: string;
-    metadata: Record<string, any>;
+    metadata: Record<string, unknown>;
     state: ObjectState;
     capabilities: InteractionCapability[];
     accessibility: AccessibilityData;
@@ -112,7 +112,7 @@ export interface FilterState {
   relationshipTypes: Set<string>;
   confidenceThreshold: number;
   dateRange: { start: Date; end: Date } | null;
-  customFilters: Record<string, any>;
+  customFilters: Record<string, unknown>;
 }
 
 export interface SearchState {
@@ -137,7 +137,7 @@ export interface Command {
   id: string;
   type: string;
   timestamp: number;
-  data: any;
+  data: unknown;
   execute: () => void;
   undo: () => void;
   merge?: (other: Command) => Command | null;

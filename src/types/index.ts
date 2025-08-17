@@ -105,8 +105,8 @@ export interface CameraKeyframe extends CameraState {
 export interface SceneAnimation {
   target: string;
   property: string;
-  from: any;
-  to: any;
+  from: unknown;
+  to: unknown;
   progress: [number, number];
   duration: number;
   ease: string;

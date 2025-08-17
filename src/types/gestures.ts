@@ -1,6 +1,6 @@
 'use client';
 
-import { Vector3 } from 'three';
+import type { Vector3 } from 'three';
 
 /**
  * Advanced Gesture Recognition Types
@@ -247,7 +247,7 @@ export interface GestureRecording {
 // Gesture training data
 export interface GestureTrainingData {
   samples: GestureRecording[];
-  recognitionModel?: any; // ML model for custom gesture recognition
+  recognitionModel?: unknown; // ML model for custom gesture recognition
   accuracy: number;
   lastTrainingDate: number;
 }
