@@ -51,6 +51,7 @@ export default function Home() {
     vectorization: false,
     entityExtraction: false,
     knowledgeGraph: false,
+    queryResponse: false,
     claudeInterface: false
   });
   const { scrollState } = useScrollControl(7); // 7 secciones para extender el mundo
