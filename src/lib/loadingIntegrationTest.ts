@@ -186,7 +186,7 @@ export class LoadingIntegrationTester {
       try {
         await this.progressiveLoader.loadAssetById('nonexistent-asset');
         this.testResults.failedTests.push('Error Handling: Should have thrown error for invalid asset');
-      } catch (error) {
+      } catch {
         this.testResults.passedTests.push('Error Handling: Properly handles invalid assets');
       }
       

@@ -276,7 +276,7 @@ export class ScrollAnimationOrchestrator {
 
     // Handle section changes
     if (scrollState.currentSection !== this.currentSection) {
-      this.handleSectionChange(scrollState.currentSection, scrollState.direction);
+      this.handleSectionChange(scrollState.currentSection);
     }
 
     // Update section-specific progress
@@ -286,7 +286,7 @@ export class ScrollAnimationOrchestrator {
     }
   }
 
-  private handleSectionChange(newSection: number, _direction: 'up' | 'down'): void {
+  private handleSectionChange(newSection: number): void {
     if (this.isAnimating) return;
 
     this.isAnimating = true;

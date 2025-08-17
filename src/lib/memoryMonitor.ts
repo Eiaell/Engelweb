@@ -69,7 +69,7 @@ export class MemoryMonitor {
     const performanceManager = PerformanceManager.getInstance();
 
     // Get JS heap info if available
-    const memory = (performance as any).memory;
+    const memory = (performance as { memory?: { usedJSHeapSize: number; totalJSHeapSize: number } }).memory;
     const jsHeapUsed = memory ? Math.round(memory.usedJSHeapSize / 1024 / 1024) : 0;
     const jsHeapTotal = memory ? Math.round(memory.totalJSHeapSize / 1024 / 1024) : 0;
 

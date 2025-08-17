@@ -308,8 +308,8 @@ export class MemoryManager {
   // Force garbage collection
   triggerGarbageCollection() {
     // Clear unused cached resources
-    const activeTextures = new Set<string>();
-    const activeGeometries = new Set<string>();
+    // const activeTextures = new Set<string>();
+    // const activeGeometries = new Set<string>();
     
     // Mark resources used by active scenes
     this.activeScenes.forEach(sceneId => {

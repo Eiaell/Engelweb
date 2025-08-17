@@ -271,7 +271,7 @@ export class MobileOptimizer {
           opacity,
           metalness: options.metalness || 0,
           roughness: options.roughness || 1,
-          map: map ? this.optimizeTexture(map, settings) : undefined
+          map: map ? this.optimizeTexture(map) : undefined
         });
         break;
         
@@ -280,7 +280,7 @@ export class MobileOptimizer {
           color,
           transparent,
           opacity,
-          map: map ? this.optimizeTexture(map, settings) : undefined
+          map: map ? this.optimizeTexture(map) : undefined
         });
         break;
         
@@ -290,7 +290,7 @@ export class MobileOptimizer {
           color,
           transparent,
           opacity,
-          map: map ? this.optimizeTexture(map, settings) : undefined
+          map: map ? this.optimizeTexture(map) : undefined
         });
         break;
     }
@@ -301,7 +301,7 @@ export class MobileOptimizer {
   /**
    * Optimize texture for mobile rendering
    */
-  private optimizeTexture(texture: THREE.Texture, _settings: MobileSceneSettings): THREE.Texture {
+  private optimizeTexture(texture: THREE.Texture): THREE.Texture {
     // Clone texture to avoid modifying original
     const optimized = texture.clone();
     

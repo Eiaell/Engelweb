@@ -104,7 +104,7 @@ class MobileDetectionManager {
     const capabilities = this.detectCapabilities();
 
     // Performance profiling
-    const performance = this.profilePerformance(isMobile, isTablet, capabilities);
+    const performance = this.profilePerformance(isMobile, isTablet);
 
     return {
       isMobile,
@@ -171,7 +171,7 @@ class MobileDetectionManager {
     };
   }
 
-  private profilePerformance(isMobile: boolean, isTablet: boolean, _capabilities: unknown) {
+  private profilePerformance(isMobile: boolean, isTablet: boolean) {
     let tier: 'low' | 'medium' | 'high' = 'medium';
     let estimatedGPU: 'integrated' | 'discrete' = 'integrated';
     let memoryLimit = 256; // MB

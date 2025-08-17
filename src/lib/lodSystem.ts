@@ -32,7 +32,7 @@ export class LODObject extends THREE.LOD {
   }
 
   private initializeLODLevels() {
-    this.lodConfig.levels.forEach((level, index) => {
+    this.lodConfig.levels.forEach((level) => {
       const mesh = new THREE.Mesh(level.geometry, level.material);
       this.addLevel(mesh, level.distance);
     });
@@ -139,7 +139,7 @@ export class LODManager {
     position: THREE.Vector3,
     material: THREE.Material
   ): LODObject {
-    const qualitySettings = this.performanceManager.getQualitySettings();
+    // const qualitySettings = this.performanceManager.getQualitySettings();
     
     const levels: LODLevel[] = [
       {
