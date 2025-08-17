@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect, useCallback, useMemo } from 'react';
+import React, { useRef, useEffect, useCallback, useMemo } from 'react';
 import { gsap } from 'gsap';
 import { ScrollState, TextRevealConfig } from '@/types';
 
@@ -425,27 +425,16 @@ export const ScrollTextReveal: React.FC<ScrollTextRevealProps> = ({
 }) => {
   const elementRef = useRef<HTMLDivElement>(null);
   
-  // This would need to be provided by a context provider
-  // const { registerElement, unregisterElement } = useScrollTextReveal(...);
-
   useEffect(() => {
     if (elementRef.current) {
-      // registerElement(config.id, elementRef.current);
-      
-      return () => {
-        // unregisterElement(config.id);
-      };
+      // Future: register element for animation
     }
   }, [config.id]);
 
-  return (
-    <div
-      ref={elementRef}
-      data-text-reveal={config.id}
-      className={className}
-      style={style}
-    >
-      {children}
-    </div>
-  );
+  return React.createElement('div', {
+    ref: elementRef,
+    'data-text-reveal': config.id,
+    className: className,
+    style: style
+  }, children);
 };
