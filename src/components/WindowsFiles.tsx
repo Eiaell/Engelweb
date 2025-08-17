@@ -159,7 +159,7 @@ const WindowsFiles: React.FC<WindowsFilesProps> = ({ scrollProgress }) => {
         </Text>
         
         <Text
-          text="DATA NO ESTRUCTURADA"
+          text="VIENE CON DATA NO ESTRUCTURADA"
           fontSize={2.2}
           color="#ffffff"
           anchorX="center"

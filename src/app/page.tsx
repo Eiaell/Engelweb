@@ -17,30 +17,30 @@ import { TextReveal } from '@/components/TextReveal';
 // Award-winning professional content with cinematic sophistication
 const sectionContent = {
   foundation: {
-    title: "Ingesta de datos",
-    subtitle: "Transformación inteligente de información",
+    title: "De Datos Aislados a Conocimiento Conectado",
+    subtitle: "Transformación inteligente con GraphRAG",
     description: "Proceso PDF, Word y Excel para crear memoria organizacional estructurada."
   },
   
   human: {
-    title: "Fragmentación y vectorización",
-    subtitle: "De texto a memoria semántica",
-    description: "Convierto contenido en text chunks optimizados y los almacenamos en vector database para búsquedas contextuales precisas."
+    title: "Entendimiento Profundo del Contenido",
+    subtitle: "Convertimos tus documentos en conocimiento útil",
+    description: "Analizamos y estructuramos tu información para que la IA pueda realizar búsquedas basadas en el significado real, no solo en palabras clave."
   },
   strategy: {
-    title: "Extracción de entidades",
-    subtitle: "Identificación de elementos clave",
-    description: "Personas, procesos, relaciones y conceptos estructurados en memoria corporativa activa."
+    title: "Conectando los Puntos Clave",
+    subtitle: "Damos estructura a tu conocimiento",
+    description: "Extraemos los \"quién\", \"qué\" y \"cómo\" de tus documentos para construir un mapa de relaciones claro y útil para tu organización."
   },
   technical: {
-    title: "Grafo de conocimiento",
-    subtitle: "Conexiones que generan inteligencia y valor",
-    description: "Knowledge graph navegable que mapea información, relaciones y contexto."
+    title: "El Panorama Completo de tu Información",
+    subtitle: "Descubre conexiones ocultas y obtén respuestas con contexto",
+    description: "Te entregamos un mapa interactivo de tus datos, permitiéndote navegar las relaciones entre proyectos, personas y conceptos clave como nunca antes."
   },
   graphrag: {
-    title: "Consulta y respuesta del Usuario",
-    subtitle: "Resultados trazables y explicables",
-    description: "Junto a mi equipo combinamos memoria vectorial y grafos para entregar respuestas precisas y auditables."
+    title: "Respuestas Precisas y Confiables",
+    subtitle: "Entiende siempre el porqué de cada resultado",
+    description: "Combinamos la búsqueda por significado con el mapa de relaciones de tus datos para darte respuestas exactas y con contexto. Cada resultado es transparente, permitiéndote verificar las fuentes originales fácilmente."
   }
 };
 
@@ -181,20 +181,10 @@ export default function Home() {
         </InteractionProvider>
 
         {/* Navigation Hints - Responsive */}
-        <div className="fixed bottom-4 sm:bottom-8 right-2 sm:right-8 z-20 text-right space-y-1 sm:space-y-2">
-          <div className="bg-black/50 backdrop-blur-sm px-2 sm:px-4 py-1 sm:py-2 rounded-lg border border-white/20">
-            <p className="text-cyan-400 text-xs sm:text-sm animate-pulse">
-              <span className="hidden sm:inline">🖱️ Cursor</span><span className="sm:hidden">👆 Touch</span> = interactuar
-            </p>
-          </div>
+        <div className="fixed bottom-4 sm:bottom-8 right-2 sm:right-8 z-20 text-right">
           <div className="bg-black/50 backdrop-blur-sm px-2 sm:px-4 py-1 sm:py-2 rounded-lg border border-white/20">
             <p className="text-yellow-400 text-xs sm:text-sm animate-pulse">
               ⬇️ Scroll = explorar
-            </p>
-          </div>
-          <div className="bg-black/50 backdrop-blur-sm px-2 sm:px-4 py-1 sm:py-2 rounded-lg border border-white/20">
-            <p className="text-magenta-400 text-xs sm:text-sm animate-pulse">
-              <span className="hidden sm:inline">🖱️ Drag</span><span className="sm:hidden">👆 Swipe</span> = mover cámara
             </p>
           </div>
         </div>
@@ -309,23 +299,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Botón Superman para volver al inicio - Mobile Responsive */}
-        {scrollState.progress > 0.80 && (
-          <div className="fixed top-4 sm:top-8 left-2 sm:left-8 z-30">
-            <button 
-              onClick={() => {
-                // Scroll suave tipo Superman al inicio
-                window.scrollTo({
-                  top: 0,
-                  behavior: 'smooth'
-                });
-              }}
-              className="bg-gradient-to-r from-blue-600 to-red-600 hover:from-blue-500 hover:to-red-500 text-white font-bold py-2 px-3 sm:py-4 sm:px-6 rounded-full transition-all duration-300 transform hover:scale-110 shadow-lg shadow-blue-500/25 animate-pulse text-xs sm:text-base"
-            >
-              🦸‍♂️ <span className="hidden sm:inline">VOLVER AL INICIO</span><span className="sm:hidden">INICIO</span>
-            </button>
-          </div>
-        )}
       </main>
     </AccessibilityProvider>
   );

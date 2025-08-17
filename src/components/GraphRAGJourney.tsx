@@ -17,7 +17,7 @@ const GraphRAGJourney: React.FC<GraphRAGJourneyProps> = ({ scrollProgress }) => 
     {
       id: 'start',
       position: new THREE.Vector3(0, 2, -35),
-      title: 'DATA NO ESTRUCTURADA',
+      title: 'VIENE CON DATA NO ESTRUCTURADA',
       subtitle: 'Documentos, PDFs, Excel dispersos',
       color: '#FF4444'
     },
