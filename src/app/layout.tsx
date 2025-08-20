@@ -8,13 +8,13 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Engelbert Huber - Orquestador de Agentes Digitales",
-  description: "No soy programador. No soy marketero. Soy un orquestador de agentes digitales que diseña sistemas invisibles para que puedas volver a ser creativo, humano, libre.",
-  keywords: ["IA", "automatización", "sistemas", "agentes digitales", "flujos humanos"],
+  title: "Engelbert Huber - AI Engineering",
+  description: "AI Engineering - Diseñando sistemas inteligentes que transforman la manera de trabajar.",
+  keywords: ["AI Engineering", "IA", "automatización", "sistemas", "inteligencia artificial", "machine learning"],
   authors: [{ name: "Engelbert Huber Quequejana" }],
   openGraph: {
-    title: "Engelbert Huber - Orquestador de Agentes Digitales",
-    description: "Diseño sistemas invisibles que respetan lo humano",
+    title: "Engelbert Huber - AI Engineering",
+    description: "AI Engineering - Sistemas inteligentes que transforman el trabajo",
     type: "website",
     locale: "es_ES",
   }

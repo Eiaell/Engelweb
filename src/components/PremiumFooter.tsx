@@ -14,7 +14,7 @@ export const PremiumFooter = () => {
               EH
             </div>
             <p className="text-body text-white/60">
-              Orquestador de agentes digitales
+              AI Engineering
             </p>
             <div className="eh-monogram">
               Engelbert Huber Quequejana

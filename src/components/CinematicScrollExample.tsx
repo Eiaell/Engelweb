@@ -100,7 +100,7 @@ export const CinematicScrollExample: React.FC = () => {
                 }}
                 className="text-2xl mb-8 text-gray-600"
               >
-                <p>Soy un orquestador de agentes digitales</p>
+                <p>AI Engineering</p>
               </ScrollTextReveal>
               
               <ScrollTextReveal

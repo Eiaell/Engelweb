@@ -13,7 +13,7 @@ export default function Home() {
             Engelbert Huber
           </h1>
           <p className="text-xl text-slate-300">
-            Orquestador de Agentes Digitales
+            AI Engineering
           </p>
           <div className="space-y-4 text-lg text-slate-400">
             <p>No soy programador.</p>

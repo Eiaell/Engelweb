@@ -203,7 +203,7 @@ export const FallbackRenderer: React.FC<FallbackRendererProps> = ({
             </div>
             <div className="fallback-text">
               <h1>No soy programador...</h1>
-              <p>Soy un orquestador de agentes digitales.</p>
+              <p>AI Engineering.</p>
             </div>
           </section>
 
@@ -279,13 +279,13 @@ export const FallbackRenderer: React.FC<FallbackRendererProps> = ({
       <div className="fallback-minimal-content">
         <header className="fallback-header">
           <h1>Engelbert Huber</h1>
-          <p>Orquestador de agentes digitales</p>
+          <p>AI Engineering</p>
         </header>
 
         <main className="fallback-main">
           <section>
             <h2>Identidad</h2>
-            <p>No soy programador. Soy un orquestador de agentes digitales.</p>
+            <p>AI Engineering.</p>
           </section>
 
           <section>

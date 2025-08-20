@@ -33,9 +33,9 @@ export const sectionDescriptions = {
   },
   present: {
     title: "Sección de Presente",
-    description: "Muestra su trabajo actual como orquestador de agentes digitales usando tecnologías como LangChain, Zapier, RAG y AI Agents.",
+    description: "Muestra su trabajo actual en AI Engineering usando tecnologías como LangChain, Zapier, RAG y AI Agents.",
     visualDescription: "Ríos de datos fluyendo con iconos de herramientas tecnológicas. Animaciones de partículas representan el flujo de información.",
-    content: "Texto principal: 'Orquestador de agentes digitales. LangChain • Zapier • RAG • AI Agents. Ríos de datos que fluyen hacia soluciones reales'",
+    content: "Texto principal: 'AI Engineering. LangChain • Zapier • RAG • AI Agents. Ríos de datos que fluyen hacia soluciones reales'",
     interactionHint: "Descubra la visión futura en la siguiente sección.",
     sectionIndex: 4,
     totalSections: 6
